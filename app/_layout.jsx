@@ -40,7 +40,6 @@ const RootLayout = () => {
 
   return (
     <Stack>
-      <Text>RootLayout</Text>
       <Stack.Screen name="index" options={{ headerShown: false }} />
     </Stack>
   );
