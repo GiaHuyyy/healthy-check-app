@@ -8,19 +8,18 @@ import CustomButton from "../../components/CustomButton";
 import Icons from "../../constants/icons";
 import CustomButtonBack from "../../components/CustomButtonBack";
 
-const SignIn = () => {
+const ForgotPassword = () => {
   const [form, setForm] = useState({
     email: "",
-    password: "",
   });
 
   return (
     <SafeAreaView className="flex-1">
       <ScrollView>
-        <CustomButtonBack handlePress={() => router.back("/index")} />
+        <CustomButtonBack handlePress={() => router.back("/sign-in")} />
         <View className="mt-10 px-5">
           <Text className="text-center font-obold700 text-[32px] leading-[48px] text-primary">
-            Welcome back 👋
+            Forgot Password
           </Text>
           <FormField
             title="Email"
@@ -31,38 +30,14 @@ const SignIn = () => {
             keyboardType="email-address"
           />
 
-          <FormField
-            title="Password"
-            value={form.password}
-            handleChangeText={(e) => setForm({ ...form, password: e })}
-            placeholder={"Enter password"}
-            containerStyles="mt-[17px]"
-          />
-
-          <Link href="/forgot-password" className="mt-5 text-right text-secondary">
-            Forgot password?
-          </Link>
-
           <CustomButton
-            title="Sign in"
+            title="Next"
             containerStyles="bg-[#535CE8] mt-6"
             textStyles="text-white"
             handlePress={() => {
-              router.push("/overview");
+              router.push("/make-selection");
             }}
           />
-          <Text className="mt-8 text-center font-lbold700 text-xs text-[#6E7787]">OR LOGIN IN WITH</Text>
-          <View className="mt-4 flex-row justify-center">
-            <TouchableOpacity className="px-[14px]">
-              <Icons.Google />
-            </TouchableOpacity>
-            <TouchableOpacity className="px-[14px]">
-              <Icons.Facebook />
-            </TouchableOpacity>
-            <TouchableOpacity className="px-[14px]">
-              <Icons.Apple />
-            </TouchableOpacity>
-          </View>
           <View className="mt-8 flex-row justify-center">
             <Text className="text-primary">Don't have an account?</Text>
             <Link href="/sign-up" className="text-secondary">
@@ -76,4 +51,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default ForgotPassword;

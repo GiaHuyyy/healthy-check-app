@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import { NativeWindStyleSheet } from "nativewind";
 import { SplashScreen, Stack } from "expo-router";
@@ -48,5 +47,3 @@ const RootLayout = () => {
 };
 
 export default RootLayout;
-
-const styles = StyleSheet.create({});

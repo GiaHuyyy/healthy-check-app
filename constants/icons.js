@@ -7,6 +7,8 @@ import Google from "../assets/icons/google.svg";
 import Facebook from "../assets/icons/facebook.svg";
 import Apple from "../assets/icons/apple.svg";
 import Back from "../assets/icons/back.svg";
+import Phone from "../assets/icons/phone.svg";
+import Email from "../assets/icons/email.svg";
 
 const Icons = {
     Logo,
@@ -18,5 +20,7 @@ const Icons = {
     Facebook,
     Apple,
     Back,
+    Phone,
+    Email,
 }
 export default Icons;
