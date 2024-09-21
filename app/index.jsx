@@ -10,8 +10,8 @@ export default function App() {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View className="h-full flex-1 bg-[#535CE8] pb-[53px]">
-          <Image source={Images.Hero} resizeMode="cover" className="w-full rounded-bl-full" />
+        <View className="flex-1 bg-[#535CE8] pb-[53px]">
+          <Image source={Images.Hero} className="w-full rounded-bl-full" />
           <View className="px-[37px]">
             <View className="h-[58px] w-[58px] items-center justify-center rounded-full bg-white">
               <Icons.Logo className="h-16 w-16" />
