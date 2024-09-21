@@ -6,6 +6,7 @@ import { Link, router } from "expo-router";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import Icons from "../../constants/icons";
+import CustomButtonBack from "../../components/CustomButtonBack";
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -16,8 +17,11 @@ const SignIn = () => {
   return (
     <SafeAreaView className="flex-1">
       <ScrollView>
-        <View className="mt-20 px-5">
-          <Text className="text-center font-obold700 text-[32px] leading-[48px]">Welcome back 👋</Text>
+        <CustomButtonBack handlePress={() => router.back("/index")} />
+        <View className="mt-10 px-5">
+          <Text className="text-center font-obold700 text-[32px] leading-[48px] text-primary">
+            Welcome back 👋
+          </Text>
           <FormField
             title="Email"
             value={form.email}
@@ -60,12 +64,10 @@ const SignIn = () => {
           </View>
           <View className="mt-8 flex-row justify-center">
             <Text className="text-primary">Don't have an account?</Text>
-            <TouchableOpacity>
-              <Link href="/sign-up" className="text-secondary">
-                {" "}
-                Sign up
-              </Link>
-            </TouchableOpacity>
+            <Link href="/sign-up" className="text-secondary">
+              {" "}
+              Sign up
+            </Link>
           </View>
         </View>
       </ScrollView>

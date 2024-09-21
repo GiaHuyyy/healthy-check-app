@@ -6,6 +6,7 @@ import Eye from "../assets/icons/eye.svg";
 import Google from "../assets/icons/google.svg";
 import Facebook from "../assets/icons/facebook.svg";
 import Apple from "../assets/icons/apple.svg";
+import Back from "../assets/icons/back.svg";
 
 const Icons = {
     Logo,
@@ -16,5 +17,6 @@ const Icons = {
     Google,
     Facebook,
     Apple,
+    Back,
 }
 export default Icons;
