@@ -9,18 +9,22 @@ import Apple from "../assets/icons/apple.svg";
 import Back from "../assets/icons/back.svg";
 import Phone from "../assets/icons/phone.svg";
 import Email from "../assets/icons/email.svg";
+import ResetPass from "../assets/icons/reset-password.svg";
+import Approval from "../assets/icons/approval.svg";
 
 const Icons = {
-    Logo,
-    Overview,
-    Explore,
-    Sharing,
-    Eye,
-    Google,
-    Facebook,
-    Apple,
-    Back,
-    Phone,
-    Email,
-}
+  Logo,
+  Overview,
+  Explore,
+  Sharing,
+  Eye,
+  Google,
+  Facebook,
+  Apple,
+  Back,
+  Phone,
+  Email,
+  ResetPass,
+  Approval,
+};
 export default Icons;

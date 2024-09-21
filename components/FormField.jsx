@@ -16,11 +16,13 @@ const FormField = ({ title, value, placeholder, handleChangeText, containerStyle
           placeholderTextColor={"#BCC1CA"}
           onChangeText={handleChangeText}
           className="flex-1 font-lregular400 text-base leading-[26px] text-primary"
-          secureTextEntry={title === "Password" && !showPassword}
+          secureTextEntry={
+            (title === "Password" && !showPassword) || (title === "Repeat Password" && !showPassword)
+          }
           {...props}
         />
 
-        {title === "Password" && (
+        {(title === "Password" || title === "Repeat Password") && (
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
             <Icons.Eye className="h-5 w-5" />
           </TouchableOpacity>
