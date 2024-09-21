@@ -26,7 +26,7 @@ const MakeSelection = () => {
           </View>
 
           <CustomButton
-            title="Sing In Again"
+            title="Sign In Again"
             containerStyles="bg-[#535CE8] mt-6"
             textStyles="text-white"
             handlePress={() => {
