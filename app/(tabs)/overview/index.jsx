@@ -90,7 +90,7 @@ const Overview = () => {
                 </View>
                 <Text className="font-lregular400 text-[11px] text-white">updated a day ago</Text>
               </TouchableOpacity>
-              <TouchableOpacity className="flex-1 rounded-2xl bg-[#21A1A3] p-4">
+              <TouchableOpacity onPress={() => router.push("/overview/nutrition")} className="flex-1 rounded-2xl bg-[#21A1A3] p-4">
                 <Image source={Images.nutrition} className="ml-auto" />
                 <Text className="mt-3 font-omedium500 text-sm text-white">Nutrition</Text>
                 <View className="flex-row">
