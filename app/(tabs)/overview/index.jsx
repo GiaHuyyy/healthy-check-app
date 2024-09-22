@@ -1,9 +1,10 @@
 import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
 import React from "react";
-import Icons from "../../constants/icons";
-import Images from "../../constants/images";
+import Icons from "../../../constants/icons";
+import Images from "../../../constants/images";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native";
+import { router } from "expo-router";
 
 const Overview = () => {
   return (
@@ -24,7 +25,7 @@ const Overview = () => {
 
           <View className="flex-row items-center justify-between">
             <Text className="font-obold700 text-[32px] leading-[48px] text-primary">Overview</Text>
-            <TouchableOpacity className="flex-row items-center gap-x-1 rounded-full border border-[#535ce8] px-2 py-2">
+            <TouchableOpacity onPress={() => router.push("/overview/all-data")} className="flex-row items-center gap-x-1 rounded-full border border-[#535ce8] px-2 py-2">
               <Icons.Rocket />
               <Text className="font-lregular400 text-xs text-secondary">All data</Text>
             </TouchableOpacity>
@@ -60,7 +61,7 @@ const Overview = () => {
           <View className="mt-4">
             <View className="flex-row flex-wrap gap-x-4">
               <TouchableOpacity className="flex-1 rounded-2xl bg-[#7C83ED] p-4">
-                <Icons.Steps className="ml-auto" />
+                <Icons.Run className="ml-auto" />
                 <Text className="mt-3 font-omedium500 text-sm text-white">Steps</Text>
                 <Text className="font-omedium500 text-2xl leading-9 text-white">11,857</Text>
                 <Text className="font-lregular400 text-[11px] text-white">updated 15 min ago</Text>
