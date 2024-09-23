@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Circle } from "react-native-svg";
@@ -55,9 +55,7 @@ const Nutrition = () => {
 
     return (
       <Svg>
-        {/* Background circle */}
         <Circle strokeWidth={strokeWidth} stroke="#F4F6FA" fill="transparent" r={radius} cx="120" cy="120" />
-        {/* Foreground animated circle */}
         <AnimatedCircle
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
@@ -70,6 +68,34 @@ const Nutrition = () => {
           cy="120"
         />
       </Svg>
+    );
+  };
+
+  const AnimatedPercentageText = ({ targetPercentage, main }) => {
+    const [displayPercentage, setDisplayPercentage] = useState(0);
+    const animatedPercentage = useSharedValue(0);
+
+    useEffect(() => {
+      animatedPercentage.value = withTiming(targetPercentage, {
+        duration: 1000,
+      });
+
+      // Interval to update the percentage text smoothly
+      const interval = setInterval(() => {
+        setDisplayPercentage(Math.round(animatedPercentage.value));
+      }, 16); // Update every ~16ms (60fps)
+
+      return () => clearInterval(interval);
+    }, [targetPercentage]);
+
+    return (
+      <>
+        {main ? (
+          <Text className="font-osemibold600 text-4xl text-primary">{displayPercentage}%</Text>
+        ) : (
+          <Text className="font-osemibold600 text-base text-primary">{displayPercentage}%</Text>
+        )}
+      </>
     );
   };
 
@@ -99,7 +125,8 @@ const Nutrition = () => {
               ))}
             </Svg>
             <View className="absolute inset-0 flex flex-col items-center justify-center">
-              <Text className="font-osemibold600 text-[32px] text-primary">60%</Text>
+              {/* Animated percentage text */}
+              <AnimatedPercentageText targetPercentage={60} main />
               <Text className="font-lregular400 text-sm text-[#9095A0]">of 1300 kcal</Text>
             </View>
           </View>
@@ -118,11 +145,14 @@ const Nutrition = () => {
                 }}
               >
                 <View className="flex-row items-center">
-                  <View className={`h-6 w-6 rounded-full bg-[${item.color}] mr-2`}></View>
+                  <View
+                    className={`mr-2 h-6 w-6 rounded-full`}
+                    style={{ backgroundColor: item.color }}
+                  ></View>
                   <Text className="w-16 font-oregular400 text-base text-primary">{item.name}</Text>
                 </View>
                 <Text className="font-osemibold600 text-base text-primary">{item.value}g</Text>
-                <Text className="font-osemibold600 text-base text-primary">{item.percentage}%</Text>
+                <AnimatedPercentageText targetPercentage={item.percentage} />
               </View>
             ))}
           </View>
