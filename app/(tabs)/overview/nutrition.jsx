@@ -17,15 +17,13 @@ const Nutrition = () => {
       value: 80,
       percentage: 40,
       color: "#59DBDD",
-      strokeWidth: 16,
-      radius: 68,
+      radius: 69,
     },
     {
       name: "Protein",
       value: 160,
       percentage: 56,
       color: "#9973D7",
-      strokeWidth: 16,
       radius: 88,
     },
     {
@@ -33,12 +31,11 @@ const Nutrition = () => {
       value: 230,
       percentage: 62,
       color: "#7C83ED",
-      strokeWidth: 16,
       radius: 108,
     },
   ];
 
-  const CircleProgress = ({ percentage, color, strokeWidth, radius }) => {
+  const CircleProgress = ({ percentage, color, radius }) => {
     const circumference = 2 * Math.PI * radius;
     const progress = useSharedValue(0);
 
@@ -55,9 +52,9 @@ const Nutrition = () => {
 
     return (
       <Svg>
-        <Circle strokeWidth={strokeWidth} stroke="#F4F6FA" fill="transparent" r={radius} cx="120" cy="120" />
+        <Circle strokeWidth={16} stroke="#F4F6FA" fill="transparent" r={radius} cx="120" cy="120" />
         <AnimatedCircle
-          strokeWidth={strokeWidth}
+          strokeWidth={16}
           strokeDasharray={circumference}
           animatedProps={animatedProps}
           strokeLinecap="round"
@@ -119,12 +116,11 @@ const Nutrition = () => {
                   key={index}
                   percentage={item.percentage}
                   color={item.color}
-                  strokeWidth={item.strokeWidth}
                   radius={item.radius}
                 />
               ))}
             </Svg>
-            <View className="absolute inset-0 flex flex-col items-center justify-center">
+            <View className="absolute items-center justify-center">
               {/* Animated percentage text */}
               <AnimatedPercentageText targetPercentage={60} main />
               <Text className="font-lregular400 text-sm text-[#9095A0]">of 1300 kcal</Text>

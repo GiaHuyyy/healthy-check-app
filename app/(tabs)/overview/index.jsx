@@ -8,7 +8,7 @@ import { router } from "expo-router";
 
 const Overview = () => {
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <ScrollView>
         <View className="px-5 pb-8">
           <View className="mt-4 flex-row justify-between">
@@ -25,7 +25,10 @@ const Overview = () => {
 
           <View className="flex-row items-center justify-between">
             <Text className="font-obold700 text-[32px] leading-[48px] text-primary">Overview</Text>
-            <TouchableOpacity onPress={() => router.push("/overview/all-data")} className="flex-row items-center gap-x-1 rounded-full border border-[#535ce8] px-2 py-2">
+            <TouchableOpacity
+              onPress={() => router.push("/overview/all-data")}
+              className="flex-row items-center gap-x-1 rounded-full border border-[#535ce8] px-2 py-2"
+            >
               <Icons.Rocket />
               <Text className="font-lregular400 text-xs text-secondary">All data</Text>
             </TouchableOpacity>
@@ -60,7 +63,10 @@ const Overview = () => {
 
           <View className="mt-4">
             <View className="flex-row flex-wrap gap-x-4">
-              <TouchableOpacity className="flex-1 rounded-2xl bg-[#7C83ED] p-4">
+              <TouchableOpacity
+                onPress={() => router.push("/overview/steps")}
+                className="flex-1 rounded-2xl bg-[#7C83ED] p-4"
+              >
                 <Icons.Run className="ml-auto" />
                 <Text className="mt-3 font-omedium500 text-sm text-white">Steps</Text>
                 <Text className="font-omedium500 text-2xl leading-9 text-white">11,857</Text>
@@ -90,7 +96,10 @@ const Overview = () => {
                 </View>
                 <Text className="font-lregular400 text-[11px] text-white">updated a day ago</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.push("/overview/nutrition")} className="flex-1 rounded-2xl bg-[#21A1A3] p-4">
+              <TouchableOpacity
+                onPress={() => router.push("/overview/nutrition")}
+                className="flex-1 rounded-2xl bg-[#21A1A3] p-4"
+              >
                 <Image source={Images.nutrition} className="ml-auto" />
                 <Text className="mt-3 font-omedium500 text-sm text-white">Nutrition</Text>
                 <View className="flex-row">

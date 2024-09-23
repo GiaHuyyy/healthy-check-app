@@ -37,7 +37,7 @@ const AllData = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <ScrollView>
         <CustomButtonBack title="All Health Data" handlePress={() => router.back()} />
         <View className="px-5 pb-12">
