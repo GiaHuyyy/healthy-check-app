@@ -85,7 +85,10 @@ const Overview = () => {
               </TouchableOpacity>
             </View>
             <View className="mt-6 flex-row flex-wrap gap-x-4">
-              <TouchableOpacity className="flex-1 rounded-2xl bg-[#125D95] p-4">
+              <TouchableOpacity
+                onPress={() => router.push("/overview/sleep")}
+                className="flex-1 rounded-2xl bg-[#125D95] p-4"
+              >
                 <Icons.Sleep className="ml-auto" />
                 <Text className="mt-3 font-omedium500 text-sm text-white">Sleep</Text>
                 <View className="flex-row">

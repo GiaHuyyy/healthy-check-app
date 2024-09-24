@@ -8,6 +8,7 @@ const OverviewLayout = () => {
       <Stack.Screen name="all-data" options={{ headerShown: false }} />
       <Stack.Screen name="nutrition" options={{ headerShown: false }} />
       <Stack.Screen name="steps" options={{ headerShown: false }} />
+      <Stack.Screen name="sleep" options={{ headerShown: false }} />
     </Stack>
   );
 };
