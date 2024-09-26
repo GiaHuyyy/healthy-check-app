@@ -5,6 +5,7 @@ import Images from "../../../constants/images";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
+import TitleLink from "../../../components/TitleLink";
 
 const Overview = () => {
   return (
@@ -72,7 +73,10 @@ const Overview = () => {
                 <Text className="font-omedium500 text-2xl leading-9 text-white">11,857</Text>
                 <Text className="font-lregular400 text-[11px] text-white">updated 15 min ago</Text>
               </TouchableOpacity>
-              <TouchableOpacity className="flex-1 rounded-2xl bg-[#9973D7] p-4">
+              <TouchableOpacity
+                onPress={() => router.push("/overview/cycle-tracking")}
+                className="flex-1 rounded-2xl bg-[#9973D7] p-4"
+              >
                 <Icons.Cycle className="ml-auto" />
                 <Text className="mt-3 font-omedium500 text-sm text-white">Cycle tracking</Text>
                 <View className="flex-row">
@@ -115,13 +119,7 @@ const Overview = () => {
           </View>
 
           {/* This week report */}
-          <View className="mt-8 flex-row items-center justify-between">
-            <Text className="font-osemibold600 text-xl text-primary">This week report</Text>
-            <TouchableOpacity className="flex-row items-center">
-              <Text className="font-lregular400 text-xs leading-4 text-[#424955]">View more</Text>
-              <Icons.More className="ml-1" stroke={"#424955"} />
-            </TouchableOpacity>
-          </View>
+          <TitleLink title="This week report" />
 
           <View className="mt-4">
             <View className="flex-row gap-x-4">
@@ -192,7 +190,7 @@ const Overview = () => {
           </View>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mt-4">
-            <View className="flex-row items-center gap-x-4">
+            <View className="flex-row items-center gap-x-5">
               <View
                 className="w-[272px] rounded-2xl border border-[#e9e9eb] bg-white p-5"
                 style={{
