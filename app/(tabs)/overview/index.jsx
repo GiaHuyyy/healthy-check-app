@@ -6,11 +6,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import TitleLink from "../../../components/TitleLink";
+import BlogItem from "../../../components/BlogItem";
 
 const Overview = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View className="px-5 pb-8">
           <View className="mt-4 flex-row justify-between">
             <Icons.LogoSmall />
@@ -54,13 +55,7 @@ const Overview = () => {
           </View>
 
           {/* Highlight */}
-          <View className="mt-8 flex-row items-center justify-between">
-            <Text className="font-osemibold600 text-xl text-primary">Highlight</Text>
-            <TouchableOpacity className="flex-row items-center">
-              <Text className="font-lregular400 text-xs leading-4 text-[#424955]">View more</Text>
-              <Icons.More className="ml-1" stroke={"#424955"} />
-            </TouchableOpacity>
-          </View>
+          <TitleLink title="Highlight" />
 
           <View className="mt-4">
             <View className="flex-row flex-wrap gap-x-4">
@@ -181,119 +176,41 @@ const Overview = () => {
           </View>
 
           {/* Blog */}
-          <View className="mt-8 flex-row items-center justify-between px-5">
-            <Text className="font-osemibold600 text-xl text-primary">Blogs</Text>
-            <TouchableOpacity className="flex-row items-center">
-              <Text className="font-lregular400 text-xs leading-4 text-[#424955]">View more</Text>
-              <Icons.More className="ml-1" stroke={"#424955"} />
-            </TouchableOpacity>
-          </View>
+          <TitleLink title="Blog" />
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mt-4">
             <View className="flex-row items-center gap-x-5">
-              <View
-                className="w-[272px] rounded-2xl border border-[#e9e9eb] bg-white p-5"
-                style={{
-                  shadowColor: "rgba(23, 26, 31, 0.20)",
-                  shadowOffset: { width: 0, height: 0 },
-                  shadowOpacity: 1,
-                  shadowRadius: 2,
-                  elevation: 3,
-                }}
-              >
-                <Image source={Images.blog01} className="h-[162px] w-full" resizeMode="cover" />
-                <Text className="mt-4 font-oregular400 text-xs text-[#323842]">Nutrition</Text>
-                <Text className="font-osemibold600 text-lg text-[#323842]">
-                  More about Apples: Benefits, nutrition, and tips
-                </Text>
-                <View className="mt-5 flex-row justify-between">
-                  <TouchableOpacity className="flex-row items-center justify-center gap-x-1 rounded-full bg-[#F1F2FD] px-[6px] py-[5px]">
-                    <Icons.Like />
-                    <Text className="font-lregular400 text-[11px] text-secondary">78 votes</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity className="flex-row items-center justify-center gap-x-1 px-1">
-                    <Text className="font-lregular400 text-[11px] text-[#9095A0]">Tell me more</Text>
-                    <Icons.More stroke={"#9095A0"} />
-                  </TouchableOpacity>
-                </View>
+              <View>
+                <BlogItem
+                  thumb={Images.blog01}
+                  subtitle="Nutriton"
+                  title="More about Apples: Benefits, nutrition, and tips"
+                  votes={78}
+                />
               </View>
-              <View
-                className="w-[272px] rounded-2xl border border-[#e9e9eb] bg-white p-5"
-                style={{
-                  shadowColor: "rgba(23, 26, 31, 0.20)",
-                  shadowOffset: { width: 0, height: 0 },
-                  shadowOpacity: 1,
-                  shadowRadius: 2,
-                  elevation: 3,
-                }}
-              >
-                <Image source={Images.blog02} className="h-[162px] w-full" resizeMode="cover" />
-                <Text className="mt-4 font-oregular400 text-xs text-[#323842]">Power</Text>
-                <Text className="font-osemibold600 text-lg text-[#323842]">
-                  More about cabbage: Benefits, nutrition, and tips
-                </Text>
-                <View className="mt-5 flex-row justify-between">
-                  <TouchableOpacity className="flex-row items-center justify-center gap-x-1 rounded-full bg-[#F1F2FD] px-[6px] py-[5px]">
-                    <Icons.Like />
-                    <Text className="font-lregular400 text-[11px] text-secondary">54 votes</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity className="flex-row items-center justify-center gap-x-1 px-1">
-                    <Text className="font-lregular400 text-[11px] text-[#9095A0]">Tell me more</Text>
-                    <Icons.More stroke={"#9095A0"} />
-                  </TouchableOpacity>
-                </View>
+              <View>
+                <BlogItem
+                  thumb={Images.blog02}
+                  subtitle="Lifestyle"
+                  title="The sience of using time to maximize your health"
+                  votes={54}
+                />
               </View>
-              <View
-                className="w-[272px] rounded-2xl border border-[#e9e9eb] bg-white p-5"
-                style={{
-                  shadowColor: "rgba(23, 26, 31, 0.20)",
-                  shadowOffset: { width: 0, height: 0 },
-                  shadowOpacity: 1,
-                  shadowRadius: 2,
-                  elevation: 3,
-                }}
-              >
-                <Image source={Images.blog03} className="h-[162px] w-full" resizeMode="cover" />
-                <Text className="mt-4 font-oregular400 text-xs text-[#323842]">Nutrition</Text>
-                <Text className="font-osemibold600 text-lg text-[#323842]">
-                  More about cauliflower: Benefits, nutrition, and tips
-                </Text>
-                <View className="mt-5 flex-row justify-between">
-                  <TouchableOpacity className="flex-row items-center justify-center gap-x-1 rounded-full bg-[#F1F2FD] px-[6px] py-[5px]">
-                    <Icons.Like />
-                    <Text className="font-lregular400 text-[11px] text-secondary">102 votes</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity className="flex-row items-center justify-center gap-x-1 px-1">
-                    <Text className="font-lregular400 text-[11px] text-[#9095A0]">Tell me more</Text>
-                    <Icons.More stroke={"#9095A0"} />
-                  </TouchableOpacity>
-                </View>
+              <View>
+                <BlogItem
+                  thumb={Images.blog03}
+                  subtitle="Nutriton"
+                  title="The best time to eat breakfast, lunch, and dinner"
+                  votes={78}
+                />
               </View>
-              <View
-                className="w-[272px] rounded-2xl border border-[#e9e9eb] bg-white p-5"
-                style={{
-                  shadowColor: "rgba(23, 26, 31, 0.20)",
-                  shadowOffset: { width: 0, height: 0 },
-                  shadowOpacity: 1,
-                  shadowRadius: 2,
-                  elevation: 3,
-                }}
-              >
-                <Image source={Images.blog04} className="h-[162px] w-full" resizeMode="cover" />
-                <Text className="mt-4 font-oregular400 text-xs text-[#323842]">Heart rate</Text>
-                <Text className="font-osemibold600 text-lg text-[#323842]">
-                  More about carrots: Benefits, nutrition, and tips
-                </Text>
-                <View className="mt-5 flex-row justify-between">
-                  <TouchableOpacity className="flex-row items-center justify-center gap-x-1 rounded-full bg-[#F1F2FD] px-[6px] py-[5px]">
-                    <Icons.Like />
-                    <Text className="font-lregular400 text-[11px] text-secondary">99 votes</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity className="flex-row items-center justify-center gap-x-1 px-1">
-                    <Text className="font-lregular400 text-[11px] text-[#9095A0]">Tell me more</Text>
-                    <Icons.More stroke={"#9095A0"} />
-                  </TouchableOpacity>
-                </View>
+              <View>
+                <BlogItem
+                  thumb={Images.blog04}
+                  subtitle="Lifestyle"
+                  title="The sience of using time to maximize your health"
+                  votes={78}
+                />
               </View>
             </View>
           </ScrollView>

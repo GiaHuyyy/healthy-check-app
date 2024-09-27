@@ -36,6 +36,7 @@ import Bell from "../assets/icons/bell.svg";
 import Note from "../assets/icons/note.svg";
 import Daily from "../assets/icons/daily.svg";
 import Meals from "../assets/icons/meals.svg";
+import Search from "../assets/icons/search.svg";
 import Dots from "../assets/icons/dots.svg";
 import Check from "../assets/icons/check.svg";
 import Protect from "../assets/icons/protect.svg";
@@ -80,6 +81,7 @@ const Icons = {
   Note,
   Daily,
   Meals,
+  Search,
   Dots,
   Check,
   Protect,

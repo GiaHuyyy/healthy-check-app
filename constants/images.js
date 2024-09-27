@@ -7,6 +7,9 @@ import blog02 from "../assets/images/blog-02.jpg";
 import blog03 from "../assets/images/blog-03.jpg";
 import blog04 from "../assets/images/blog-04.png";
 import cycle01 from "../assets/images/cycle-01.png";
+import foryou01 from "../assets/images/foryou-01.png";
+import foryou02 from "../assets/images/foryou-02.png";
+import foryou03 from "../assets/images/foryou-03.png";
 
 const Images = {
   hero,
@@ -18,6 +21,9 @@ const Images = {
   blog03,
   blog04,
   cycle01,
+  foryou01,
+  foryou02,
+  foryou03,
 };
 
 export default Images;

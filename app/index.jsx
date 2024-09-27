@@ -9,7 +9,7 @@ import CustomButton from "../components/CustomButton";
 export default function App() {
   return (
     <SafeAreaView className="flex-1">
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View className="flex-1 bg-[#535CE8] pb-[53px]">
           <Image source={Images.hero} className="w-full rounded-bl-full" />
           <View className="px-[37px]">

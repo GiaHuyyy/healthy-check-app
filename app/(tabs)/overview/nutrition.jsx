@@ -98,7 +98,7 @@ const Nutrition = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <CustomButtonBack title="Nutrition" handlePress={() => router.back()} />
         <View className="px-5 pb-8">
           <View className="mt-10 items-center">

@@ -1,5 +1,5 @@
 import { Image, ScrollView, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButtonBack from "../../../components/CustomButtonBack";
 import { router } from "expo-router";
@@ -7,7 +7,7 @@ import { TouchableOpacity } from "react-native";
 import Icons from "../../../constants/icons";
 import TitleLink from "../../../components/TitleLink";
 import Images from "../../../constants/images";
-
+import { useSharedValue, withTiming } from "react-native-reanimated";
 const days = [
   { label: "M", date: "06", duration: 12, content: "Low chance of getting pregnant" },
   { label: "T", date: "07", duration: 18, content: "Birthday Mom" },
@@ -37,9 +37,28 @@ const CycleTracking = () => {
       </TouchableOpacity>
     );
   };
+
+  const AnimatedStepsText = ({ targetSteps }) => {
+    const [displaySteps, setDisplaySteps] = useState(0);
+    const animatedSteps = useSharedValue(0);
+
+    useEffect(() => {
+      animatedSteps.value = withTiming(targetSteps, {
+        duration: 1000,
+      });
+
+      const interval = setInterval(() => {
+        setDisplaySteps(Math.round(animatedSteps.value));
+      }, 16); // Update every ~16ms (60fps)
+
+      return () => clearInterval(interval);
+    }, [targetSteps]);
+
+    return <Text className="mt-1 font-osemibold600 text-[32px] text-white">{displaySteps} days</Text>;
+  };
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <CustomButtonBack title="Cycle Traking" handlePress={() => router.back()} />
         <View className="mb-8 px-5">
           {/* Calendar */}
@@ -73,7 +92,7 @@ const CycleTracking = () => {
             }}
           >
             <Text className="mt-14 font-lbold700 text-lg text-white">Period in</Text>
-            <Text className="mt-1 font-osemibold600 text-[32px] text-white">{selectedDay.duration} days</Text>
+            <AnimatedStepsText targetSteps={selectedDay.duration} />
             <Text className="mt-1 font-lregular400 text-xs text-white">{selectedDay.content}</Text>
             <TouchableOpacity className="mt-6 h-9 items-center justify-center rounded-[18px] bg-white px-3">
               <Text className="font-lregular400 text-sm text-primary">Edit period dates</Text>

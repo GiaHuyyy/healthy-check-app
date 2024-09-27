@@ -51,7 +51,7 @@ const Sleep = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <CustomButtonBack title="Sleep" handlePress={() => router.back()} />
         <View className="mb-8 px-5">
           <View className="mt-10 items-center">

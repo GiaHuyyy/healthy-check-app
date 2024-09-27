@@ -14,7 +14,7 @@ const screenWidth = Dimensions.get("window").width;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const Steps = () => {
-  const [selectedTab, setSelectedTab] = useState("Today");
+  const [selectedTab, setSelectedTab] = useState("Weekly");
   const stepsPercentage = (11857 / 18000) * 100;
 
   const animatedStepsValue = useSharedValue(0);
@@ -102,7 +102,7 @@ const Steps = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <CustomButtonBack title="Nutrition" handlePress={() => router.back()} />
         <View className="px-5 pb-8">
           <View className="mt-10 items-center">
