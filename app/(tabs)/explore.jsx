@@ -19,9 +19,9 @@ const Explore = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View className="px-5 pb-8">
+        <View className="px-5 pb-8 pt-5">
           {/* Search */}
-          <View className="mt-5 flex-row justify-between">
+          <View className="flex-row justify-between">
             <View className="h-[43px] w-[80%] flex-row items-center overflow-hidden rounded-[22px] border border-[#BCC1CA] bg-white pl-4">
               <TouchableOpacity>
                 <Icons.Search />
