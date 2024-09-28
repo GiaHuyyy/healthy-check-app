@@ -1,5 +1,5 @@
 import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Icons from "../../../constants/icons";
 import Images from "../../../constants/images";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -7,16 +7,31 @@ import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import TitleLink from "../../../components/TitleLink";
 import BlogItem from "../../../components/BlogItem";
+import { useGlobalContext } from "../../../context/GlobalProvider";
 
 const Overview = () => {
+  const { user } = useGlobalContext();
+
+  const [avatarUrl, setAvatarUrl] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      setAvatarUrl(user.avatar);
+    }
+  }, [user]);
+  console.log("user", user);
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View className="px-5 pb-8">
-          <View className="mt-4 flex-row justify-between">
+        <View className="px-5 pb-8 pt-5">
+          <View className="flex-row items-center justify-between">
             <Icons.LogoSmall />
             <TouchableOpacity>
-              <Image source={Images.avatar} resizeMode="contain" className="h-[44px] w-[44px] rounded-full" />
+              {avatarUrl ? (
+                <Image source={{ uri: avatarUrl }} className="h-[44px] w-[44px] rounded-full" />
+              ) : (
+                <></>
+              )}
             </TouchableOpacity>
           </View>
 

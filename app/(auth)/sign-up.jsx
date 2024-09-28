@@ -1,4 +1,4 @@
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router } from "expo-router";
@@ -7,6 +7,8 @@ import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import Icons from "../../constants/icons";
 import CustomButtonBack from "../../components/CustomButtonBack";
+import { createUser } from "../../lib/appwrite";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -14,6 +16,27 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { setIsLoggedIn } = useGlobalContext();
+  const submit = async () => {
+    if(!form.username || !form.email || !form.password) {
+      Alert.alert("Error", "Please fill all fields");
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      const result = await createUser(form.email, form.password, form.username);
+      setIsLoggedIn(true);
+      // set it to global state
+      router.replace("/overview");
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <SafeAreaView className="flex-1">
@@ -56,9 +79,8 @@ const SignUp = () => {
             title="Sign up"
             containerStyles="bg-[#535CE8] mt-6"
             textStyles="text-white"
-            handlePress={() => {
-              router.push("/sign-in");
-            }}
+            handlePress={submit}
+            isLoading={isSubmitting}
           />
           <Text className="mt-8 text-center font-lbold700 text-xs text-[#6E7787]">OR REGISTER WITH</Text>
           <View className="mt-4 flex-row justify-center">

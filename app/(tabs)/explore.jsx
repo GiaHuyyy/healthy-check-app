@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Text, TouchableOpacity, ScrollView, TextInput, Image } from "react-native";
-import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icons from "../../constants/icons";
 import Images from "../../constants/images";
 import TitleLink from "../../components/TitleLink";
 import BlogItem from "../../components/BlogItem";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Explore = () => {
+  const { user } = useGlobalContext();
   const ForYouItem = ({ thumb, title }) => {
     return (
       <TouchableOpacity className="w-[120px] items-center rounded-2xl bg-[#F1F2FD] py-[14px]">
@@ -16,6 +17,7 @@ const Explore = () => {
       </TouchableOpacity>
     );
   };
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -34,7 +36,11 @@ const Explore = () => {
               />
             </View>
             <TouchableOpacity>
-              <Image source={Images.avatar} resizeMode="contain" className="h-[44px] w-[44px] rounded-full" />
+              <Image
+                source={{ uri: user.avatar }}
+                resizeMode="contain"
+                className="h-[44px] w-[44px] rounded-full"
+              />
             </TouchableOpacity>
           </View>
 

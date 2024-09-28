@@ -7,12 +7,36 @@ import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import Icons from "../../constants/icons";
 import CustomButtonBack from "../../components/CustomButtonBack";
+import { signIn } from "../../lib/appwrite";
+import { Alert } from "react-native";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const SignIn = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { setIsLoggedIn } = useGlobalContext();
+  const submit = async () => {
+    if(!form.email || !form.password) {
+      Alert.alert("Error", "Please fill all fields");
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      await signIn(form.email, form.password);
+      setIsLoggedIn(true);
+      // set it to global state
+      router.replace("/overview");
+    } catch (error) {
+      Alert.alert("Errorrr", error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <SafeAreaView className="flex-1">
@@ -47,9 +71,8 @@ const SignIn = () => {
             title="Sign in"
             containerStyles="bg-[#535CE8] mt-6"
             textStyles="text-white"
-            handlePress={() => {
-              router.push("/overview");
-            }}
+            handlePress={submit}
+            isLoading={isSubmitting}
           />
           <Text className="mt-8 text-center font-lbold700 text-xs text-[#6E7787]">OR LOGIN IN WITH</Text>
           <View className="mt-4 flex-row justify-center">

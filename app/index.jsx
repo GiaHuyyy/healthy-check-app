@@ -1,12 +1,16 @@
-import { StatusBar } from "expo-status-bar";
 import { Image, ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { Redirect, router } from "expo-router";
 import Icons from "../constants/icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Images from "../constants/images";
 import CustomButton from "../components/CustomButton";
+import { useGlobalContext } from "../context/GlobalProvider";
 
 export default function App() {
+  const { isLoading, isLoggedIn } = useGlobalContext();
+
+  if (!isLoading && isLoggedIn) return <Redirect href="/overview" />;
+
   return (
     <SafeAreaView className="flex-1">
       <ScrollView showsVerticalScrollIndicator={false}>
