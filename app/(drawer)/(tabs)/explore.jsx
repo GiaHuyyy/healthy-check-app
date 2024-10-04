@@ -1,14 +1,17 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ScrollView, TextInput, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Icons from "../../constants/icons";
-import Images from "../../constants/images";
-import TitleLink from "../../components/TitleLink";
-import BlogItem from "../../components/BlogItem";
-import { useGlobalContext } from "../../context/GlobalProvider";
+import { useNavigation, DrawerActions } from "@react-navigation/native";
+
+import { useGlobalContext } from "../../../context/GlobalProvider";
+import Icons from "../../../constants/icons";
+import Images from "../../../constants/images";
+import TitleLink from "../../../components/TitleLink";
+import BlogItem from "../../../components/BlogItem";
 
 const Explore = () => {
   const { user } = useGlobalContext();
+  const navigation = useNavigation();
   const ForYouItem = ({ thumb, title }) => {
     return (
       <TouchableOpacity className="w-[120px] items-center rounded-2xl bg-[#F1F2FD] py-[14px]">
@@ -35,9 +38,13 @@ const Explore = () => {
                 className="h-full w-full pl-2 font-lregular400 text-base text-primary"
               />
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.dispatch(DrawerActions.openDrawer);
+              }}
+            >
               <Image
-                source={{ uri: user.avatar }}
+                source={{ uri: user?.avatar }}
                 resizeMode="contain"
                 className="h-[44px] w-[44px] rounded-full"
               />

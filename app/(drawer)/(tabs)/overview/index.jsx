@@ -1,37 +1,55 @@
 import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import Icons from "../../../constants/icons";
-import Images from "../../../constants/images";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
-import TitleLink from "../../../components/TitleLink";
-import BlogItem from "../../../components/BlogItem";
-import { useGlobalContext } from "../../../context/GlobalProvider";
+import { useNavigation, DrawerActions } from "@react-navigation/native";
+import { useSharedValue, withTiming } from "react-native-reanimated";
+
+import { useGlobalContext } from "../../../../context/GlobalProvider";
+import BlogItem from "../../../../components/BlogItem";
+import TitleLink from "../../../../components/TitleLink";
+import Images from "../../../../constants/images";
+import Icons from "../../../../constants/icons";
 
 const Overview = () => {
   const { user } = useGlobalContext();
+  const navigation = useNavigation();
 
-  const [avatarUrl, setAvatarUrl] = useState("");
+  const AnimatedStepsText = ({ targetSteps }) => {
+    const [displaySteps, setDisplaySteps] = useState(0);
+    const animatedSteps = useSharedValue(0);
 
-  useEffect(() => {
-    if (user) {
-      setAvatarUrl(user.avatar);
-    }
-  }, [user]);
-  console.log("user", user);
+    useEffect(() => {
+      animatedSteps.value = withTiming(targetSteps, {
+        duration: 1000,
+      });
+
+      const interval = setInterval(() => {
+        setDisplaySteps(Math.round(animatedSteps.value));
+      }, 16); // Update every ~16ms (60fps)
+
+      return () => clearInterval(interval);
+    }, [targetSteps]);
+
+    return <Text className="font-obold700 text-2xl leading-9 text-white">{displaySteps}</Text>;
+  };
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="px-5 pb-8 pt-5">
           <View className="flex-row items-center justify-between">
             <Icons.LogoSmall />
-            <TouchableOpacity>
-              {avatarUrl ? (
-                <Image source={{ uri: avatarUrl }} className="h-[44px] w-[44px] rounded-full" />
-              ) : (
-                <></>
-              )}
+            <TouchableOpacity
+              onPress={() => {
+                navigation.dispatch(DrawerActions.openDrawer);
+              }}
+            >
+              <Image
+                source={{ uri: user?.avatar }}
+                resizeMode="contain"
+                className="h-[44px] w-[44px] rounded-full"
+              />
             </TouchableOpacity>
           </View>
 
@@ -57,7 +75,7 @@ const Overview = () => {
               resizeMode="contain"
               className="absolute right-4 h-[72px] w-[72px] items-center justify-center"
             >
-              <Text className="font-obold700 text-2xl leading-9 text-white">78</Text>
+              <AnimatedStepsText targetSteps="78" />
             </ImageBackground>
             <Text className="font-osemibold600 text-lg text-primary">Health Score</Text>
             <Text className="mt-1 w-[198px] font-lregular400 text-sm text-primary">

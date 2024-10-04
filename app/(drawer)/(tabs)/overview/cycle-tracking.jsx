@@ -1,13 +1,14 @@
 import { Image, ScrollView, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomButtonBack from "../../../components/CustomButtonBack";
 import { router } from "expo-router";
 import { TouchableOpacity } from "react-native";
-import Icons from "../../../constants/icons";
-import TitleLink from "../../../components/TitleLink";
-import Images from "../../../constants/images";
 import { useSharedValue, withTiming } from "react-native-reanimated";
+
+import TitleLink from "../../../../components/TitleLink";
+import CustomButtonBack from "../../../../components/CustomButtonBack";
+import Icons from "../../../../constants/icons";
+import Images from "../../../../constants/images";
 const days = [
   { label: "M", date: "06", duration: 12, content: "Low chance of getting pregnant" },
   { label: "T", date: "07", duration: 18, content: "Birthday Mom" },

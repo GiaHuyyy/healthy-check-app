@@ -9,13 +9,14 @@ const FormField = ({ title, value, placeholder, handleChangeText, containerStyle
     <View className={`${containerStyles}`}>
       <Text className="font-lbold700 text-base leading-[26px] text-[#424955]">{title}</Text>
 
-      <View className="h-[43px] flex-row items-center rounded-2xl bg-[#e5e5e6] px-4">
+      <View className="h-[43px] flex-row items-center rounded-2xl bg-[#e5e5e6]">
         <TextInput
           value={value}
           placeholder={placeholder}
           placeholderTextColor={"#BCC1CA"}
           onChangeText={handleChangeText}
-          className="h-full w-full font-lregular400 text-base leading-[26px] text-primary"
+          style={{ outline: "none" }}
+          className="h-full w-[91%] pl-4 font-lregular400 text-base leading-[26px] text-primary"
           secureTextEntry={
             (title === "Password" && !showPassword) || (title === "Repeat Password" && !showPassword)
           }

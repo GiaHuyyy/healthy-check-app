@@ -18,21 +18,31 @@ const SignUp = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { setIsLoggedIn } = useGlobalContext();
+
+  const { setUser, setIsLoggedIn } = useGlobalContext();
+
   const submit = async () => {
-    if(!form.username || !form.email || !form.password) {
+    if (!form.username || !form.email || !form.password) {
       Alert.alert("Error", "Please fill all fields");
+      alert("Please fill all fields");
     }
 
     setIsSubmitting(true);
-    
+
     try {
       const result = await createUser(form.email, form.password, form.username);
+
+      setUser(result);
       setIsLoggedIn(true);
-      // set it to global state
-      router.replace("/overview");
+      Alert.alert("Success", "You have successfully signed up", [
+        {
+          text: "OK",
+          onPress: () => router.replace("/overview"),
+        },
+      ]);
     } catch (error) {
       Alert.alert("Error", error.message);
+      // alert(error.message);
     } finally {
       setIsSubmitting(false);
     }

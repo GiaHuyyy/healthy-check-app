@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomButtonBack from "../../../components/CustomButtonBack";
 import { router } from "expo-router";
-import Icons from "../../../constants/icons";
+
+import CustomButtonBack from "../../../../components/CustomButtonBack";
+import Icons from "../../../../constants/icons";
 
 const data = {
   Today: [

@@ -26,7 +26,7 @@ const GlobalProvider = ({ children }) => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [isLoggedIn]);
+  }, []);
 
   return (
     <GlobalContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, isLoading }}>

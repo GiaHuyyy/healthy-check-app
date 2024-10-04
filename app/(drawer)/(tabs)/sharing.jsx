@@ -1,8 +1,9 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Icons from "../../constants/icons";
-import CustomButton from "../../components/CustomButton";
+
+import CustomButton from "../../../components/CustomButton";
+import Icons from "../../../constants/icons";
 
 const Sharing = () => {
   const SharingItem = ({ Icon, title, des }) => {

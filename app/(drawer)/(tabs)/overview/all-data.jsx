@@ -1,10 +1,11 @@
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React from "react";
-import Icons from "../../../constants/icons";
-import CustomButtonBack from "../../../components/CustomButtonBack";
 import { router } from "expo-router";
 import { TouchableOpacity } from "react-native";
+
+import CustomButtonBack from "../../../../components/CustomButtonBack";
+import Icons from "../../../../constants/icons";
 
 const AllData = () => {
   const Item = ({ Icon, bgIcon, title, value, unit }) => {

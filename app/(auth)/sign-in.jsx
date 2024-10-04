@@ -7,39 +7,52 @@ import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import Icons from "../../constants/icons";
 import CustomButtonBack from "../../components/CustomButtonBack";
-import { signIn } from "../../lib/appwrite";
+import { getCurrentUser, signIn } from "../../lib/appwrite";
 import { Alert } from "react-native";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 const SignIn = () => {
   const [form, setForm] = useState({
-    email: "",
+    email: "tovugiahuy@gmail.com",
     password: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { setIsLoggedIn } = useGlobalContext();
+
+  const { setUser, setIsLoggedIn } = useGlobalContext();
+
   const submit = async () => {
-    if(!form.email || !form.password) {
+    if (!form.email || !form.password) {
       Alert.alert("Error", "Please fill all fields");
+      alert("Please fill all fields");
     }
 
     setIsSubmitting(true);
-    
+
     try {
       await signIn(form.email, form.password);
+
+      const result = await getCurrentUser();
+
+      setUser(result);
       setIsLoggedIn(true);
-      // set it to global state
-      router.replace("/overview");
+
+      Alert.alert("Success", "You have successfully logged in", [
+        {
+          text: "OK",
+          onPress: () => router.replace("/overview"),
+        },
+      ]);
     } catch (error) {
-      Alert.alert("Errorrr", error.message);
+      Alert.alert("Error", error.message);
+      // alert(error.message);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <ScrollView>
         <CustomButtonBack handlePress={() => router.back("/index")} />
         <View className="mt-10 px-5">

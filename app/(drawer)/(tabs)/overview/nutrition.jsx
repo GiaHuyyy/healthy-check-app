@@ -3,10 +3,11 @@ import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Circle } from "react-native-svg";
 import Animated, { useSharedValue, useAnimatedProps, withTiming } from "react-native-reanimated";
-import CustomButtonBack from "../../../components/CustomButtonBack";
 import { router } from "expo-router";
-import CustomButton from "../../../components/CustomButton";
-import Icons from "../../../constants/icons";
+
+import CustomButtonBack from "../../../../components/CustomButtonBack";
+import CustomButton from "../../../../components/CustomButton";
+import Icons from "../../../../constants/icons";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
