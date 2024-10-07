@@ -8,9 +8,10 @@ import CustomButtonBack from "../../../../components/CustomButtonBack";
 import Icons from "../../../../constants/icons";
 
 const AllData = () => {
-  const Item = ({ Icon, bgIcon, title, value, unit }) => {
+  const Item = ({ Icon, bgIcon, title, value, unit, handlePress }) => {
     return (
       <TouchableOpacity
+        onPress={handlePress}
         className="mt-5 flex-row rounded-2xl border border-[#e9e9eb] bg-white p-4"
         style={{
           shadowColor: "rgba(23, 26, 31, 0.20)",
@@ -52,11 +53,31 @@ const AllData = () => {
               unit="%"
             />
             {/* 2 */}
-            <Item Icon={Icons.StepsSmall} bgIcon="bg-[#2ACCCF]" title="Steps" value="11,875" unit="steps" />
+            <Item
+              Icon={Icons.StepsSmall}
+              bgIcon="bg-[#2ACCCF]"
+              title="Steps"
+              value="11,875"
+              unit="steps"
+              handlePress={() => router.push("/overview/steps")}
+            />
             {/* 3 */}
-            <Item Icon={Icons.CycleSmall} bgIcon="bg-[#FE763E]" title="Cycle tracking" value="08 April" />
+            <Item
+              Icon={Icons.CycleSmall}
+              bgIcon="bg-[#FE763E]"
+              title="Cycle tracking"
+              value="08 April"
+              handlePress={() => router.push("/overview/cycle-tracking")}
+            />
             {/* 4 */}
-            <Item Icon={Icons.Bed} bgIcon="bg-[#7B48CC]" title="Sleep" value="7" unit="hr" />
+            <Item
+              Icon={Icons.Bed}
+              bgIcon="bg-[#7B48CC]"
+              title="Sleep"
+              value="7"
+              unit="hr"
+              handlePress={() => router.push("/overview/sleep")}
+            />
             {/* 5 */}
             <Item Icon={Icons.Heart} bgIcon="bg-[#DE3B40]" title="Heart" value="68" unit="BPM" />
             {/* 6 */}

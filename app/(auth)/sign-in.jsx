@@ -10,6 +10,7 @@ import CustomButtonBack from "../../components/CustomButtonBack";
 import { getCurrentUser, signIn } from "../../lib/appwrite";
 import { Alert } from "react-native";
 import { useGlobalContext } from "../../context/GlobalProvider";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -19,8 +20,8 @@ const SignIn = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { setUser, setIsLoggedIn } = useGlobalContext();
-
+  const { setUser, isLoggedIn, setIsLoggedIn } = useGlobalContext();
+  
   const submit = async () => {
     if (!form.email || !form.password) {
       Alert.alert("Error", "Please fill all fields");
@@ -34,15 +35,8 @@ const SignIn = () => {
 
       const result = await getCurrentUser();
 
-      setUser(result);
       setIsLoggedIn(true);
-
-      Alert.alert("Success", "You have successfully logged in", [
-        {
-          text: "OK",
-          onPress: () => router.replace("/overview"),
-        },
-      ]);
+      setUser(result);
     } catch (error) {
       Alert.alert("Error", error.message);
       // alert(error.message);
@@ -50,6 +44,10 @@ const SignIn = () => {
       setIsSubmitting(false);
     }
   };
+
+  if (isLoggedIn) {
+    return <LoadingScreen redirectTo="/overview" title="Signing in ..." />;
+  }
 
   return (
     <SafeAreaView className="flex-1 bg-white">

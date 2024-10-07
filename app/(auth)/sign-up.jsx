@@ -34,12 +34,13 @@ const SignUp = () => {
 
       setUser(result);
       setIsLoggedIn(true);
-      Alert.alert("Success", "You have successfully signed up", [
-        {
-          text: "OK",
-          onPress: () => router.replace("/overview"),
-        },
-      ]);
+      router.replace("/overview");
+      // Alert.alert("Success", "You have successfully signed up", [
+      //   {
+      //     text: "OK",
+      //     onPress: () => router.replace("/overview"),
+      //   },
+      // ]);
     } catch (error) {
       Alert.alert("Error", error.message);
       // alert(error.message);

@@ -104,7 +104,7 @@ const Steps = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView showsVerticalScrollIndicator={false}>
-        <CustomButtonBack title="Nutrition" handlePress={() => router.back()} />
+        <CustomButtonBack title="Steps" handlePress={() => router.back()} />
         <View className="px-5 pb-8">
           <View className="mt-10 items-center">
             <Text className="w-[240px] text-center font-osemibold600 text-2xl leading-9 text-primary">

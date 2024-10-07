@@ -1,40 +1,28 @@
-import React from "react";
-import { View, Text, Image, TouchableOpacity, Switch } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Image, TouchableOpacity, Switch, Modal } from "react-native";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { useGlobalContext } from "../context/GlobalProvider";
-import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { signOut } from "../lib/appwrite";
-import { Alert } from "react-native";
+import LoadingScreen from "./LoadingScreen";
 
 const CustomDrawerContent = (props) => {
   const { user, setUser, setIsLoggedIn } = useGlobalContext();
   const [isOnline, setIsOnline] = React.useState(true);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [isLogout, setIsLogout] = useState(false);
 
   const logout = async () => {
-    Alert.alert(
-      "Logout",
-      "Are you sure you want to logout?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Hủy đăng xuất"),
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: async () => {
-            await signOut();
-            setUser(null);
-            setIsLoggedIn(false);
-            router.replace("/sign-in");
-          },
-        },
-      ],
-      { cancelable: false },
-    );
+    await signOut();
+    setUser(null);
+    setIsLoggedIn(false);
+    setIsLogout(true);
   };
+
+  if (isLogout) {
+    return <LoadingScreen redirectTo="/sign-in" title="Sign out ..." />;
+  }
 
   return (
     <DrawerContentScrollView {...props}>
@@ -126,10 +114,36 @@ const CustomDrawerContent = (props) => {
         {/* Divider */}
         <View className="mt-2 h-[1px] w-full bg-gray-200" />
         {/* Logout Button */}
-        <TouchableOpacity className="h-11 flex-row items-center" onPress={() => logout()}>
+        <TouchableOpacity className="h-11 flex-row items-center" onPress={() => setModalVisible(true)}>
           <Ionicons name="log-out-outline" size={20} color="red" />
           <Text className="ml-3 font-lregular400 text-base text-red-500">Logout</Text>
         </TouchableOpacity>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View className="flex-1 items-center justify-center bg-white/50">
+            <View className="w-[70%] items-center rounded-lg bg-white p-5 shadow-lg">
+              <Text className="mb-4 text-center font-omedium500 text-lg">
+                Are you sure you want to logout?
+              </Text>
+              <View className="w-full flex-row justify-between">
+                <TouchableOpacity
+                  className="mr-2 rounded-lg bg-blue-500 px-4 py-2"
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text className="text-center font-omedium500 text-white">Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity className="rounded-lg bg-red-500 px-4 py-2" onPress={logout}>
+                  <Text className="text-center font-omedium500 text-white">Logout</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </View>
     </DrawerContentScrollView>
   );

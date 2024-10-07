@@ -88,7 +88,7 @@ const Overview = () => {
           </View>
 
           {/* Highlight */}
-          <TitleLink title="Highlight" />
+          <TitleLink title="Highlight" handlePress={() => router.push("/overview/all-data")} />
 
           <View className="mt-4">
             <View className="flex-row flex-wrap gap-x-4">
