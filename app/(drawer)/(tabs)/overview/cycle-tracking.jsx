@@ -24,7 +24,7 @@ const CycleTracking = () => {
   const MenstrualHealthItem = ({ img, content }) => {
     return (
       <TouchableOpacity
-        className="w-[226px] items-center overflow-hidden rounded-2xl border border-[#e9e9eb] bg-white pb-[15px]"
+        className="w-[226px] items-center overflow-hidden rounded-2xl border border-[#e9e9eb] bg-white pb-[15px] dark:bg-[#1F1F1F]"
         style={{
           shadowColor: "rgba(23, 26, 31, 0.20)",
           shadowOffset: { width: 0, height: 0 },
@@ -34,7 +34,9 @@ const CycleTracking = () => {
         }}
       >
         <Image source={img} className="h-[160px] w-full" resizeMode="cover" />
-        <Text className="mt-3 w-[190px] font-osemibold600 text-lg text-[#323842]">{content}</Text>
+        <Text className="mt-3 w-[190px] font-osemibold600 text-lg text-[#323842] dark:text-[#E4E4E7]">
+          {content}
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -58,7 +60,7 @@ const CycleTracking = () => {
     return <Text className="mt-1 font-osemibold600 text-[32px] text-white">{displaySteps} days</Text>;
   };
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white dark:bg-[#121212]">
       <ScrollView showsVerticalScrollIndicator={false}>
         <CustomButtonBack title="Cycle Traking" handlePress={() => router.back()} />
         <View className="mb-8 px-5">
@@ -66,15 +68,17 @@ const CycleTracking = () => {
           <View className="mt-7 flex-row justify-between">
             {days.map((day, index) => (
               <View key={index} className="items-center">
-                <Text className={`font-lregular400 text-sm text-[#424955]`}>{day.label}</Text>
+                <Text className="font-lregular400 text-sm text-[#424955] dark:text-[#E4E4E7]">
+                  {day.label}
+                </Text>
                 <TouchableOpacity
                   className={`mt-[6px] h-[42px] w-[42px] items-center justify-center rounded-2xl ${
-                    selectedDay.date === day.date ? "bg-[#535CE8]" : "bg-[#F8F9FA]"
+                    selectedDay.date === day.date ? "bg-[#535CE8]" : "bg-[#F8F9FA] dark:bg-[#2C2C2E]"
                   }`}
                   onPress={() => setSelectedDay(day)}
                 >
                   <Text
-                    className={`font-oregular400 text-base ${selectedDay.date === day.date ? "text-[#F1F2FD]" : "text-[#323842]"}`}
+                    className={`font-oregular400 text-base ${selectedDay.date === day.date ? "text-[#F1F2FD]" : "text-[#323842] dark:text-[#E4E4E7]"}`}
                   >
                     {day.date}
                   </Text>
@@ -102,10 +106,12 @@ const CycleTracking = () => {
 
           {/* How are you feeling today? */}
           <View className="mt-[42px]">
-            <Text className="font-obold700 text-xl text-primary">How are you feeling today?</Text>
+            <Text className="font-obold700 text-xl text-primary dark:text-[#E4E4E7]">
+              How are you feeling today?
+            </Text>
             <View className="mt-4 flex-row space-x-5">
               <TouchableOpacity
-                className="h-[118px] flex-1 items-center rounded-2xl bg-white"
+                className="h-[118px] flex-1 items-center rounded-2xl bg-white dark:bg-[#2C2C2E]"
                 style={{
                   shadowColor: "rgba(23, 26, 31, 0.20)",
                   shadowOffset: { width: 0, height: 0 },
@@ -114,15 +120,15 @@ const CycleTracking = () => {
                   elevation: 3,
                 }}
               >
-                <View className="mt-[14px] h-11 w-11 items-center justify-center rounded-full bg-[#F1F2FD]">
+                <View className="mt-[14px] h-11 w-11 items-center justify-center rounded-full bg-[#F1F2FD] dark:bg-[#444444]">
                   <Icons.Note />
                 </View>
-                <Text className="mt-1 w-[115px] text-center font-lregular400 text-xs leading-5 text-[#323842]">
+                <Text className="mt-1 w-[115px] text-center font-lregular400 text-xs leading-5 text-[#323842] dark:text-[#E4E4E7]">
                   Share your symtoms with us
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className="h-[118px] flex-1 items-center rounded-2xl bg-white"
+                className="h-[118px] flex-1 items-center rounded-2xl bg-white dark:bg-[#2C2C2E]"
                 style={{
                   shadowColor: "rgba(23, 26, 31, 0.20)",
                   shadowOffset: { width: 0, height: 0 },
@@ -131,10 +137,10 @@ const CycleTracking = () => {
                   elevation: 3,
                 }}
               >
-                <View className="mt-[14px] h-11 w-11 items-center justify-center rounded-full bg-[#FFF4F0]">
+                <View className="mt-[14px] h-11 w-11 items-center justify-center rounded-full bg-[#FFF4F0] dark:bg-[#725050]">
                   <Icons.Daily />
                 </View>
-                <Text className="mt-1 w-[115px] text-center font-lregular400 text-xs leading-5 text-[#323842]">
+                <Text className="mt-1 w-[115px] text-center font-lregular400 text-xs leading-5 text-[#323842] dark:text-[#E4E4E7]">
                   Here's your daily insights
                 </Text>
               </TouchableOpacity>

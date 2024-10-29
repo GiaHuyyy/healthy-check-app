@@ -3,6 +3,7 @@ import React from "react";
 import { Tabs } from "expo-router";
 
 import Icons from "../../../constants/icons";
+import { useGlobalContext } from "../../../context/GlobalProvider";
 
 const TabIcon = ({ Icon, name, focused }) => {
   return (
@@ -22,16 +23,18 @@ const TabIcon = ({ Icon, name, focused }) => {
 };
 
 const TabsLayout = () => {
+  const {colorScheme} = useGlobalContext();
   return (
     <Tabs
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: "#fff",
+          backgroundColor: `${colorScheme === "dark" ? "#1f2937" : "#fff"}`,
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
           height: 64,
-          shadowColor: "#171A1F",
+          overflow: 'hidden',
+          shadowColor: `${colorScheme === "dark" ? "#1f2937" : "#171A1F"}`,
           shadowOffset: {
             width: 0,
             height: 2,

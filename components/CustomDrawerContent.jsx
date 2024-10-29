@@ -5,11 +5,11 @@ import { useGlobalContext } from "../context/GlobalProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { signOut } from "../lib/appwrite";
 import LoadingScreen from "./LoadingScreen";
+import Icons from "../constants/icons";
 
 const CustomDrawerContent = (props) => {
-  const { user, setUser, setIsLoggedIn } = useGlobalContext();
-  const [isOnline, setIsOnline] = React.useState(true);
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const { user, setUser, setIsLoggedIn, isOnline, setIsOnline, colorScheme, setColorScheme } =
+    useGlobalContext();
   const [modalVisible, setModalVisible] = useState(false);
   const [isLogout, setIsLogout] = useState(false);
 
@@ -24,36 +24,54 @@ const CustomDrawerContent = (props) => {
     return <LoadingScreen redirectTo="/sign-in" title="Sign out ..." />;
   }
 
+  const DrawItem = ({ iconName, name, color, handleOnPress }) => {
+    return (
+      <TouchableOpacity onPress={handleOnPress} className="h-11 flex-row items-center">
+        <Ionicons name={iconName} size={20} color={color} />
+        <Text
+          className={`ml-3 font-lregular400 text-base ${name === "Logout" ? "text-red-500" : "text-gray-900 dark:text-[#9e9da8]"}`}
+        >
+          {name}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView
+      {...props}
+      style={{ backgroundColor: colorScheme === "dark" ? "#292e39" : "#fff" }}
+    >
       {/* User Profile Section */}
       <View className="flex-row items-center pl-5 pt-5">
-        <Image
-          source={{ uri: user?.avatar }}
-          resizeMode="contain"
-          className="h-[44px] w-[44px] rounded-full"
-        />
+        <View>
+          <Image
+            source={{ uri: user?.avatar }}
+            resizeMode="contain"
+            className="h-[44px] w-[44px] rounded-full"
+          />
+          <Icons.Status
+            className="absolute bottom-[1px] right-[1px]"
+            fill={`${isOnline ? "#1DD75B" : "#d6d9de"}`}
+          />
+        </View>
         <View className="ml-2">
-          <Text className="font-osemibold600 text-[16px] text-gray-900">{user?.username}</Text>
+          <Text className="font-osemibold600 text-[16px] text-gray-900 dark:text-[#eeedf7]">
+            {user?.username}
+          </Text>
           <Text className="font-lregular400 text-xs text-gray-400">@{user?.username}</Text>
         </View>
       </View>
 
       {/* Divider */}
-      <View className="mb-2 mt-5 h-[1px] w-full bg-gray-200" />
+      <View className="mb-2 ml-5 mt-5 h-[1px] w-full bg-gray-200" />
 
       {/* Drawer Items */}
       <View className="pl-5 pr-1">
-        <TouchableOpacity className="h-11 flex-row items-center">
-          <Ionicons name="person-outline" size={20} color="#9CA3AF" />
-          <Text className="ml-3 font-lregular400 text-base text-gray-900">Profile</Text>
-        </TouchableOpacity>
+        <DrawItem iconName="person-outline" name="Profile" color="#9CA3AF" />
 
         <View className="flex-row items-center justify-between">
-          <TouchableOpacity className="h-11 flex-row items-center">
-            <Ionicons name="eye-outline" size={20} color="#9CA3AF" />
-            <Text className="ml-3 font-lregular400 text-base text-gray-900">Show Online Status</Text>
-          </TouchableOpacity>
+          <DrawItem iconName="eye-outline" name="Show Online Status" color="#9CA3AF" />
           <Switch
             value={isOnline}
             onValueChange={(value) => setIsOnline(value)}
@@ -62,38 +80,25 @@ const CustomDrawerContent = (props) => {
           />
         </View>
 
-        <TouchableOpacity className="h-11 flex-row items-center">
-          <Ionicons name="stats-chart-outline" size={20} color="#9CA3AF" />
-          <Text className="ml-3 font-lregular400 text-base text-gray-900">My Stats</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity className="h-11 flex-row items-center">
-          <Ionicons name="wallet-outline" size={20} color="#9CA3AF" />
-          <Text className="ml-3 font-lregular400 text-base text-gray-900">Payments</Text>
-        </TouchableOpacity>
+        <DrawItem iconName="stats-chart-outline" name="My Stats" color="#9CA3AF" />
+        <DrawItem iconName="wallet-outline" name="Payments" color="#9CA3AF" />
 
         {/* Divider */}
         <View className="mt-2 h-[1px] w-full bg-gray-200" />
 
-        <TouchableOpacity className="h-11 flex-row items-center">
-          <Ionicons name="settings-outline" size={20} color="#9CA3AF" />
-          <Text className="ml-3 font-lregular400 text-base text-gray-900">Settings</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity className="h-11 flex-row items-center">
-          <Ionicons name="language-outline" size={20} color="#9CA3AF" />
-          <Text className="ml-3 font-lregular400 text-base text-gray-900">Language</Text>
-        </TouchableOpacity>
+        <DrawItem iconName="settings-outline" name="Settings" color="#9CA3AF" />
+        <DrawItem iconName="language-outline" name="Language" color="#9CA3AF" />
 
         <View className="flex-row items-center justify-between">
-          <TouchableOpacity className="h-11 flex-row items-center">
-            <Ionicons name="moon-outline" size={20} color="#9CA3AF" />
-            <Text className="ml-3 font-lregular400 text-base text-gray-900">Dark Mode</Text>
-          </TouchableOpacity>
+          <DrawItem
+            iconName={colorScheme === "dark" ? "sunny-outline" : "moon-outline"}
+            name="Dark Mode"
+            color="#9CA3AF"
+          />
           <Switch
-            value={isDarkMode}
-            onValueChange={(value) => setIsDarkMode(value)}
-            thumbColor={isDarkMode ? "#1DD75B" : "#f4f3f4"}
+            value={colorScheme === "dark"}
+            onValueChange={(value) => setColorScheme(value ? "dark" : "light")}
+            thumbColor={colorScheme === "dark" ? "#1DD75B" : "#f4f3f4"}
             trackColor={{ false: "#d6d9de", true: "#bef0cb" }}
           />
         </View>
@@ -101,23 +106,19 @@ const CustomDrawerContent = (props) => {
         {/* Divider */}
         <View className="mt-2 h-[1px] w-full bg-gray-200" />
 
-        <TouchableOpacity className="h-11 flex-row items-center">
-          <Ionicons name="help-circle-outline" size={20} color="#9CA3AF" />
-          <Text className="ml-3 font-lregular400 text-base text-gray-900">Help</Text>
-        </TouchableOpacity>
+        <DrawItem iconName="help-circle-outline" name="Help & Support" color="#9CA3AF" />
 
-        <TouchableOpacity className="h-11 flex-row items-center">
-          <Ionicons name="chatbubble-ellipses-outline" size={20} color="#9CA3AF" />
-          <Text className="ml-3 font-lregular400 text-base text-gray-900">Community & Forums</Text>
-        </TouchableOpacity>
+        <DrawItem iconName="chatbubble-ellipses-outline" name="Community & Forums" color="#9CA3AF" />
 
         {/* Divider */}
         <View className="mt-2 h-[1px] w-full bg-gray-200" />
         {/* Logout Button */}
-        <TouchableOpacity className="h-11 flex-row items-center" onPress={() => setModalVisible(true)}>
-          <Ionicons name="log-out-outline" size={20} color="red" />
-          <Text className="ml-3 font-lregular400 text-base text-red-500">Logout</Text>
-        </TouchableOpacity>
+        <DrawItem
+          iconName="log-out-outline"
+          name="Logout"
+          color="red"
+          handleOnPress={() => setModalVisible(true)}
+        />
 
         <Modal
           animationType="fade"

@@ -89,21 +89,25 @@ const Nutrition = () => {
     return (
       <>
         {main ? (
-          <Text className="font-osemibold600 text-4xl text-primary">{displayPercentage}%</Text>
+          <Text className="font-osemibold600 text-4xl text-primary dark:text-[#E4E4E7]">
+            {displayPercentage}%
+          </Text>
         ) : (
-          <Text className="font-osemibold600 text-base text-primary">{displayPercentage}%</Text>
+          <Text className="font-osemibold600 text-base text-primary dark:text-[#E4E4E7]">
+            {displayPercentage}%
+          </Text>
         )}
       </>
     );
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white dark:bg-[#121212]">
       <ScrollView showsVerticalScrollIndicator={false}>
         <CustomButtonBack title="Nutrition" handlePress={() => router.back()} />
         <View className="px-5 pb-8">
           <View className="mt-10 items-center">
-            <Text className="w-[240px] text-center font-osemibold600 text-2xl leading-9 text-primary">
+            <Text className="w-[240px] text-center font-osemibold600 text-2xl leading-9 text-primary dark:text-[#E4E4E7]">
               You have consumed
               <Text className="text-secondary"> 960 kcal </Text>
               today
@@ -124,7 +128,9 @@ const Nutrition = () => {
             <View className="absolute items-center justify-center">
               {/* Animated percentage text */}
               <AnimatedPercentageText targetPercentage={60} main />
-              <Text className="font-lregular400 text-sm text-[#9095A0]">of 1300 kcal</Text>
+              <Text className="font-lregular400 text-sm text-[#9095A0] dark:text-[#A0A0A0]">
+                of 1300 kcal
+              </Text>
             </View>
           </View>
 
@@ -132,7 +138,7 @@ const Nutrition = () => {
             {nutritionData.map((item, index) => (
               <View
                 key={index}
-                className="flex-row items-center justify-between rounded-2xl bg-white p-[14px]"
+                className="flex-row items-center justify-between rounded-2xl bg-white p-[14px] dark:bg-[#1E1E1E]"
                 style={{
                   shadowColor: "rgba(23, 26, 31, 0.20)",
                   shadowOffset: { width: 0, height: 0 },
@@ -146,9 +152,13 @@ const Nutrition = () => {
                     className={`mr-2 h-6 w-6 rounded-full`}
                     style={{ backgroundColor: item.color }}
                   ></View>
-                  <Text className="w-16 font-oregular400 text-base text-primary">{item.name}</Text>
+                  <Text className="w-16 font-oregular400 text-base text-primary dark:text-[#E4E4E7]">
+                    {item.name}
+                  </Text>
                 </View>
-                <Text className="font-osemibold600 text-base text-primary">{item.value}g</Text>
+                <Text className="font-osemibold600 text-base text-primary dark:text-[#E4E4E7]">
+                  {item.value}g
+                </Text>
                 <AnimatedPercentageText targetPercentage={item.percentage} />
               </View>
             ))}

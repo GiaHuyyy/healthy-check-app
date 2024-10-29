@@ -43,7 +43,7 @@ import Protect from "../assets/icons/protect.svg";
 import Notify from "../assets/icons/notify.svg";
 import Share from "../assets/icons/share.svg";
 import Setting from "../assets/icons/setting.svg";
-
+import Status from "../assets/icons/status.svg";
 const Icons = {
   Logo,
   LogoSmall,
@@ -90,5 +90,6 @@ const Icons = {
   Notify,
   Share,
   Setting,
+  Status,
 };
 export default Icons;

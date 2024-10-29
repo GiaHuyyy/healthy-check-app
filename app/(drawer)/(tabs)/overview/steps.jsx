@@ -8,6 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import CustomButtonBack from "../../../../components/CustomButtonBack";
 import Icons from "../../../../constants/icons";
+import { useGlobalContext } from "../../../../context/GlobalProvider";
 
 // Get screen dimensions for responsive layout
 const screenWidth = Dimensions.get("window").width;
@@ -97,17 +98,20 @@ const Steps = () => {
     }, [targetSteps]);
 
     return (
-      <Text className="font-osemibold600 text-[32px] text-primary">{displaySteps.toLocaleString()}</Text>
+      <Text className="font-osemibold600 text-[32px] text-primary dark:text-[#B0B0B0]">
+        {displaySteps.toLocaleString()}
+      </Text>
     );
   };
 
+  const { colorScheme } = useGlobalContext();
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white dark:bg-[#121212]">
       <ScrollView showsVerticalScrollIndicator={false}>
         <CustomButtonBack title="Steps" handlePress={() => router.back()} />
         <View className="px-5 pb-8">
           <View className="mt-10 items-center">
-            <Text className="w-[240px] text-center font-osemibold600 text-2xl leading-9 text-primary">
+            <Text className="w-[240px] text-center font-osemibold600 text-2xl leading-9 text-primary dark:text-[#E0E0E0]">
               You have achieved
               <Text className="text-secondary"> {stepsPercentage.toFixed(0)}% </Text>
               of your goal today
@@ -122,7 +126,9 @@ const Steps = () => {
             <View className="absolute items-center justify-center">
               <Icons.Steps />
               <AnimatedStepsText targetSteps={11857} />
-              <Text className="font-lregular400 text-sm text-[#9095A0]">Steps out of 18k</Text>
+              <Text className="font-lregular400 text-sm text-[#9095A0] dark:text-[#B0B0B0]">
+                Steps out of 18k
+              </Text>
             </View>
           </View>
 
@@ -142,19 +148,21 @@ const Steps = () => {
                   </Svg>
                   <item.Icon className="absolute" />
                 </View>
-                <Text className="mt-1 text-center font-omedium500 text-base text-primary">{item.value}</Text>
+                <Text className="mt-1 text-center font-omedium500 text-base text-primary dark:text-[#E0E0E0]">
+                  {item.value}
+                </Text>
               </View>
             ))}
           </View>
 
           {/* Chart & Tabs */}
-          <View className="mt-10 w-full rounded-lg bg-[#7C83ED] p-4">
-            <View className="mb-5 flex-row rounded-full bg-[#535CE8]">
+          <View className="mt-10 w-full rounded-lg bg-[#7C83ED] p-4 dark:bg-[#4B4B4B]">
+            <View className="mb-5 flex-row rounded-full bg-[#535CE8] dark:bg-[#333]">
               {["Today", "Weekly", "Monthly"].map((tab) => (
                 <TouchableOpacity
                   key={tab}
                   onPress={() => setSelectedTab(tab)}
-                  className={`h-9 flex-1 items-center justify-center rounded-full ${selectedTab === tab ? "bg-white" : "bg-transparent"}`}
+                  className={`h-9 flex-1 items-center justify-center rounded-full ${selectedTab === tab ? "bg-white dark:bg-[#212121]" : "bg-transparent"}`}
                 >
                   <Text
                     className={`font-lregular400 text-sm ${selectedTab === tab ? "text-secondary" : "text-white"} `}
@@ -171,18 +179,18 @@ const Steps = () => {
               width={screenWidth - 70} // Dynamic width based on screen
               height={200}
               chartConfig={{
-                backgroundColor: "#7C83ED",
-                backgroundGradientFrom: "#7C83ED",
-                backgroundGradientTo: "#7C83ED",
+                backgroundColor: colorScheme === "dark" ? "#4B4B4B" : "#7C83ED",
+                backgroundGradientFrom: colorScheme === "dark" ? "#4B4B4B" : "#7C83ED",
+                backgroundGradientTo: colorScheme === "dark" ? "#4B4B4B" : "#7C83ED",
                 decimalPlaces: 0,
-                color: () => "#fff",
+                color: () => (colorScheme === "dark" ? "#7C83ED" : "#fff"),
                 propsForLabels: {
                   fontSize: 12,
                   fontFamily: "Lato-Regular",
                 },
                 propsForBackgroundLines: {
                   strokeDasharray: "", // solid line
-                  stroke: "#fff", // Color of horizontal lines
+                  stroke: colorScheme === "dark" ? "#7C83ED" : "#fff", // Color of horizontal lines
                 },
                 strokeWidth: 2,
               }}

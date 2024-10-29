@@ -12,7 +12,7 @@ const AllData = () => {
     return (
       <TouchableOpacity
         onPress={handlePress}
-        className="mt-5 flex-row rounded-2xl border border-[#e9e9eb] bg-white p-4"
+        className="mt-5 flex-row rounded-2xl border border-[#e9e9eb] bg-white p-4 dark:border-[#333] dark:bg-[#1E1E1E]"
         style={{
           shadowColor: "rgba(23, 26, 31, 0.20)",
           shadowOffset: { width: 0, height: 0 },
@@ -25,10 +25,16 @@ const AllData = () => {
           <Icon />
         </View>
         <View className="ml-3 justify-between">
-          <Text className="font-lregular400 text-sm leading-[22px] text-primary">{title}</Text>
+          <Text className="font-lregular400 text-sm leading-[22px] text-primary dark:text-[#E4E4E7]">
+            {title}
+          </Text>
           <View className="flex-row gap-x-1">
-            <Text className="mt-auto font-osemibold600 text-xl text-primary">{value}</Text>
-            <Text className="font-lregular400 text-xs leading-7 text-[#424955]">{unit}</Text>
+            <Text className="mt-auto font-osemibold600 text-xl text-primary dark:text-[#E4E4E7]">
+              {value}
+            </Text>
+            <Text className="font-lregular400 text-xs leading-7 text-[#424955] dark:text-gray-400">
+              {unit}
+            </Text>
           </View>
         </View>
         <View className="ml-auto justify-center">
@@ -39,7 +45,7 @@ const AllData = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white dark:bg-[#121212]">
       <ScrollView showsVerticalScrollIndicator={false}>
         <CustomButtonBack title="All Health Data" handlePress={() => router.back()} />
         <View className="px-5 pb-12">

@@ -1,13 +1,19 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { getCurrentUser } from "../lib/appwrite";
+import { useColorScheme } from "nativewind";
 
 const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);
 
 const GlobalProvider = ({ children }) => {
+  // Athentication
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  // Status
+  const [isOnline, setIsOnline] = useState(true);
+  // Dark Mode
+  const {colorScheme, setColorScheme} = useColorScheme();
 
   useEffect(() => {
     getCurrentUser()
@@ -29,7 +35,20 @@ const GlobalProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, isLoading, setIsLoading }}>
+    <GlobalContext.Provider
+      value={{
+        isLoggedIn,
+        setIsLoggedIn,
+        user,
+        setUser,
+        isLoading,
+        setIsLoading,
+        isOnline,
+        setIsOnline,
+        colorScheme,
+        setColorScheme,
+      }}
+    >
       {children}
     </GlobalContext.Provider>
   );

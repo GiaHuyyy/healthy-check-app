@@ -51,12 +51,12 @@ const Sleep = () => {
   }, [selectedTab]);
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white dark:bg-[#121212]">
       <ScrollView showsVerticalScrollIndicator={false}>
         <CustomButtonBack title="Sleep" handlePress={() => router.back()} />
         <View className="mb-8 px-5">
           <View className="mt-10 items-center">
-            <Text className="w-[250px] text-center font-osemibold600 text-2xl leading-9 text-primary">
+            <Text className="w-[250px] text-center font-osemibold600 text-2xl leading-9 text-primary dark:text-[#E0E0E0]">
               Your average time of sleep a day is
               <Text className="text-secondary"> 7h 31 min </Text>
             </Text>
@@ -91,13 +91,13 @@ const Sleep = () => {
 
               return (
                 <View key={index}>
-                  <View className="h-[200px] w-8 justify-end rounded-t-full bg-[#E6E6E6]">
+                  <View className="h-[200px] w-8 justify-end rounded-t-full bg-[#E6E6E6] dark:bg-[#777676]">
                     <Animated.View
                       className={`w-full rounded-t-full ${day.isCurrent ? "bg-[#7C83ED]" : "bg-[#CACDF8]"}`}
                       style={[animatedStyle]}
                     />
                   </View>
-                  <Text className="mt-[10px] text-center font-lregular400 text-xs text-primary">
+                  <Text className="mt-[10px] text-center font-lregular400 text-xs text-primary dark:text-[#E0E0E0]">
                     {day.label}
                   </Text>
                 </View>
@@ -108,7 +108,7 @@ const Sleep = () => {
           {/* Time */}
           <View className="mt-9 flex-row space-x-5">
             <View
-              className="h-[70px] flex-1 items-center justify-center rounded-2xl border border-[#e9e9eb] bg-white"
+              className="h-[70px] flex-1 items-center justify-center rounded-2xl border border-[#e9e9eb] bg-white dark:border-[#616161] dark:bg-[#424242]"
               style={{
                 shadowColor: "rgba(23, 26, 31, 0.20)",
                 shadowOffset: { width: 0, height: 0 },
@@ -117,11 +117,13 @@ const Sleep = () => {
                 elevation: 3,
               }}
             >
-              <Text className="font-oregular400 text-xs text-[#323842]">🌟 Sleep rate</Text>
-              <Text className="mt-1 font-osemibold600 text-lg text-primary">82%</Text>
+              <Text className="font-oregular400 text-xs text-[#323842] dark:text-[#E4E4E7]">
+                🌟 Sleep rate
+              </Text>
+              <Text className="mt-1 font-osemibold600 text-lg text-primary dark:text-[#E4E4E7]">82%</Text>
             </View>
             <View
-              className="h-[70px] flex-1 items-center justify-center rounded-2xl border border-[#e9e9eb] bg-white"
+              className="h-[70px] flex-1 items-center justify-center rounded-2xl border border-[#e9e9eb] bg-white dark:border-[#616161] dark:bg-[#424242]"
               style={{
                 shadowColor: "rgba(23, 26, 31, 0.20)",
                 shadowOffset: { width: 0, height: 0 },
@@ -130,15 +132,17 @@ const Sleep = () => {
                 elevation: 3,
               }}
             >
-              <Text className="font-oregular400 text-xs text-[#323842]">😴 Deepsleep</Text>
-              <Text className="mt-1 font-osemibold600 text-lg text-primary">1h 3min</Text>
+              <Text className="font-oregular400 text-xs text-[#323842] dark:text-[#E4E4E7]">
+                😴 Deepsleep
+              </Text>
+              <Text className="mt-1 font-osemibold600 text-lg text-primary dark:text-[#E4E4E7]">1h 3min</Text>
             </View>
           </View>
 
           {/* Schedule */}
           <View className="mt-10">
             <View className="flex-row items-center justify-between">
-              <Text className="font-obold700 text-xl text-primary">Schedule</Text>
+              <Text className="font-obold700 text-xl text-primary dark:text-[#E4E4E7]">Schedule</Text>
               <TouchableOpacity>
                 <Text className="px-2 font-lregular400 text-sm text-secondary">Edit</Text>
               </TouchableOpacity>
@@ -156,11 +160,13 @@ const Sleep = () => {
               >
                 <View className="flex-row items-center gap-x-2">
                   <Icons.BedSmall />
-                  <Text className="font-oregular400 text-xs text-white">Bedtime</Text>
+                  <Text className="font-oregular400 text-xs text-white dark:text-[#E4E4E7]">Bedtime</Text>
                 </View>
                 <View className="mt-1 flex-row gap-x-1">
-                  <Text className="font-osemibold600 text-xl text-white">22:00</Text>
-                  <Text className="font-lregular400 text-xs leading-7 text-white">pm</Text>
+                  <Text className="font-osemibold600 text-xl text-white dark:text-[#E4E4E7]">22:00</Text>
+                  <Text className="font-lregular400 text-xs leading-7 text-white dark:text-[#E4E4E7]">
+                    pm
+                  </Text>
                 </View>
               </View>
               <View
@@ -175,11 +181,13 @@ const Sleep = () => {
               >
                 <View className="flex-row items-center gap-x-2">
                   <Icons.Bell />
-                  <Text className="font-oregular400 text-xs text-white">Wake up</Text>
+                  <Text className="font-oregular400 text-xs text-white dark:text-[#E4E4E7]">Wake up</Text>
                 </View>
                 <View className="mt-1 flex-row gap-x-1">
-                  <Text className="font-osemibold600 text-xl text-white">07:30</Text>
-                  <Text className="font-lregular400 text-xs leading-7 text-white">am</Text>
+                  <Text className="font-osemibold600 text-xl text-white dark:text-[#E4E4E7]">07:30</Text>
+                  <Text className="font-lregular400 text-xs leading-7 text-white dark:text-[#E4E4E7]">
+                    am
+                  </Text>
                 </View>
               </View>
             </View>
