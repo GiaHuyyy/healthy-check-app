@@ -1,13 +1,12 @@
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router } from "expo-router";
-import { useGlobalContext } from "../../context/GlobalProvider";
 
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import CustomButtonBack from "../../components/CustomButtonBack";
-import { requestPasswordRecovery } from "../../lib/appwrite";
+import { checkEmailExists } from "../../lib/appwrite";
 
 const ForgotPassword = () => {
   const [form, setForm] = useState({
@@ -20,16 +19,18 @@ const ForgotPassword = () => {
       return;
     }
     try {
-      await requestPasswordRecovery(form.email);
-      alert("Password recovery email sent. Please check your inbox.");
-      router.push("/sign-in");
+      await checkEmailExists(form.email);
+      router.push({
+        pathname: "/make-selection",
+        params: { email: form.email },
+      });
     } catch (error) {
       alert(error.message);
     }
   };
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <ScrollView>
         <CustomButtonBack handlePress={() => router.back("/sign-in")} />
         <View className="mt-10 px-5">

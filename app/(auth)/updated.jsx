@@ -8,7 +8,7 @@ import CustomButton from "../../components/CustomButton";
 
 const MakeSelection = () => {
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <ScrollView>
         <View className="mt-10 px-14">
           <Text className="text-center font-obold700 text-[32px] leading-[48px] text-primary">

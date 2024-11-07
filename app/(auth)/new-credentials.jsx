@@ -40,7 +40,7 @@ const NewCredentials = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <ScrollView>
         <CustomButtonBack handlePress={() => router.back("/index")} />
         <View className="mt-10 px-5">
