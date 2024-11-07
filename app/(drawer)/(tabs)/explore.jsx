@@ -10,24 +10,24 @@ import TitleLink from "../../../components/TitleLink";
 import BlogItem from "../../../components/BlogItem";
 
 const Explore = () => {
-  const { user } = useGlobalContext();
+  const { user, colorScheme } = useGlobalContext();
   const navigation = useNavigation();
   const ForYouItem = ({ thumb, title }) => {
     return (
-      <TouchableOpacity className="w-[120px] items-center rounded-2xl bg-[#F1F2FD] py-[14px]">
+      <TouchableOpacity className="w-[120px] items-center rounded-2xl bg-[#F1F2FD] dark:bg-[#1F2937] py-[14px]">
         <Image source={thumb} />
-        <Text className="mt-[7px] font-oregular400 text-base text-primary">{title}</Text>
+        <Text className="mt-[7px] font-oregular400 text-base text-primary dark:text-[#E4E4E7]">{title}</Text>
       </TouchableOpacity>
     );
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white dark:bg-[#121212]">
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="px-5 pb-8 pt-5">
           {/* Search */}
           <View className="flex-row justify-between">
-            <View className="h-[43px] w-[80%] flex-row items-center overflow-hidden rounded-[22px] border border-[#BCC1CA] bg-white pl-4">
+            <View className="h-[43px] w-[80%] flex-row items-center overflow-hidden rounded-[22px] border border-[#BCC1CA] dark:border-[#616161] bg-white dark:bg-[#424242] pl-4">
               <TouchableOpacity>
                 <Icons.Search />
               </TouchableOpacity>
@@ -35,7 +35,7 @@ const Explore = () => {
                 style={{ outlineStyle: "none" }}
                 placeholder="Search topic"
                 placeholderTextColor="#BCC1CA"
-                className="h-full w-full pl-2 font-lregular400 text-base text-primary"
+                className="h-full w-full pl-2 font-lregular400 text-base text-primary dark:text-[#E4E4E7]"
               />
             </View>
             <TouchableOpacity
@@ -54,7 +54,7 @@ const Explore = () => {
           {/* For you */}
           <View>
             <View className="mt-6 flex-row items-center justify-between">
-              <Text className="font-osemibold600 text-xl text-primary">For you</Text>
+              <Text className="font-osemibold600 text-xl text-primary dark:text-[#E4E4E7]">For you</Text>
               <TouchableOpacity>
                 <Icons.Dots />
               </TouchableOpacity>

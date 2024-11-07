@@ -25,7 +25,7 @@ const MakeSelection = () => {
             </Text>
           </View>
 
-          <CustomButton
+          {/* <CustomButton
             title="Sign In Again"
             containerStyles="bg-[#535CE8] mt-6"
             textStyles="text-white"
@@ -40,7 +40,7 @@ const MakeSelection = () => {
               {" "}
               Sign up
             </Link>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>

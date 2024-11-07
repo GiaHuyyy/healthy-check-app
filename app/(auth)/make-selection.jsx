@@ -5,6 +5,7 @@ import { Link, router } from "expo-router";
 
 import Icons from "../../constants/icons";
 import CustomButtonBack from "../../components/CustomButtonBack";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const MakeSelection = () => {
   return (
@@ -27,7 +28,7 @@ const MakeSelection = () => {
             <View className="flex-row items-center">
               <Icons.Phone />
               <View>
-                <Text className="ml-3 text-xs text-[#959595]">Vai SMS</Text>
+                <Text className="ml-3 text-xs text-[#959595]">Via SMS</Text>
                 <Text className="ml-3 font-lblack900 text-sm text-primary">+91 70103 66942</Text>
               </View>
             </View>
@@ -39,7 +40,7 @@ const MakeSelection = () => {
             <View className="flex-row items-center">
               <Icons.Email />
               <View>
-                <Text className="ml-3 text-xs text-[#959595]">Vai SMS</Text>
+                <Text className="ml-3 text-xs text-[#959595]">Via Email</Text>
                 <Text className="ml-3 font-lblack900 text-sm text-primary">tovugiahuy@gmail.com</Text>
               </View>
             </View>

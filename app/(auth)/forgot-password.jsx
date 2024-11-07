@@ -2,16 +2,31 @@ import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router } from "expo-router";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import Icons from "../../constants/icons";
 import CustomButtonBack from "../../components/CustomButtonBack";
+import { requestPasswordRecovery } from "../../lib/appwrite";
 
 const ForgotPassword = () => {
   const [form, setForm] = useState({
     email: "",
   });
+
+  const handleNext = async () => {
+    if (!form.email) {
+      alert("Please fill in field");
+      return;
+    }
+    try {
+      await requestPasswordRecovery(form.email);
+      alert("Password recovery email sent. Please check your inbox.");
+      router.push("/sign-in");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <SafeAreaView className="flex-1">
@@ -34,9 +49,7 @@ const ForgotPassword = () => {
             title="Next"
             containerStyles="bg-[#535CE8] mt-6"
             textStyles="text-white"
-            handlePress={() => {
-              router.push("/make-selection");
-            }}
+            handlePress={handleNext}
           />
           <View className="mt-8 flex-row justify-center">
             <Text className="text-primary">Don't have an account?</Text>

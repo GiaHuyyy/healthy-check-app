@@ -24,7 +24,7 @@ const SignIn = () => {
   
   const submit = async () => {
     if (!form.email || !form.password) {
-      Alert.alert("Error", "Please fill all fields");
+      // Alert.alert("Error", "Please fill all fields");
       alert("Please fill all fields");
     }
 
@@ -38,8 +38,8 @@ const SignIn = () => {
       setIsLoggedIn(true);
       setUser(result);
     } catch (error) {
-      Alert.alert("Error", error.message);
-      // alert(error.message);
+      // Alert.alert("Error", error.message);
+      alert(error.message);
     } finally {
       setIsSubmitting(false);
     }

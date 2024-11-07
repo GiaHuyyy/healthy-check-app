@@ -10,6 +10,8 @@ const GlobalProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  // User Change Password
+  const [userChangePassword, setUserChangePassword] = useState(null);
   // Status
   const [isOnline, setIsOnline] = useState(true);
   // Dark Mode
@@ -47,6 +49,8 @@ const GlobalProvider = ({ children }) => {
         setIsOnline,
         colorScheme,
         setColorScheme,
+        userChangePassword,
+        setUserChangePassword,
       }}
     >
       {children}
