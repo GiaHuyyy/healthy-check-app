@@ -15,7 +15,7 @@ const GlobalProvider = ({ children }) => {
   // Status
   const [isOnline, setIsOnline] = useState(true);
   // Dark Mode
-  const {colorScheme, setColorScheme} = useColorScheme();
+  const { colorScheme, setColorScheme } = useColorScheme();
 
   useEffect(() => {
     getCurrentUser()

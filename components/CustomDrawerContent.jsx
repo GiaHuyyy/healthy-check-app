@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { signOut } from "../lib/appwrite";
 import LoadingScreen from "./LoadingScreen";
 import Icons from "../constants/icons";
+import { router } from "expo-router";
 
 const CustomDrawerContent = (props) => {
   const { user, setUser, setIsLoggedIn, isOnline, setIsOnline, colorScheme, setColorScheme } =
@@ -68,7 +69,12 @@ const CustomDrawerContent = (props) => {
 
       {/* Drawer Items */}
       <View className="pl-5 pr-1">
-        <DrawItem iconName="person-outline" name="Profile" color="#9CA3AF" />
+        <DrawItem
+          iconName="person-outline"
+          name="Profile"
+          color="#9CA3AF"
+          handleOnPress={() => router.push("/profile")}
+        />
 
         <View className="flex-row items-center justify-between">
           <DrawItem iconName="eye-outline" name="Show Online Status" color="#9CA3AF" />

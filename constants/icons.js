@@ -44,6 +44,7 @@ import Notify from "../assets/icons/notify.svg";
 import Share from "../assets/icons/share.svg";
 import Setting from "../assets/icons/setting.svg";
 import Status from "../assets/icons/status.svg";
+import Camera from "../assets/icons/camera.svg";
 const Icons = {
   Logo,
   LogoSmall,
@@ -91,5 +92,6 @@ const Icons = {
   Share,
   Setting,
   Status,
+  Camera,
 };
 export default Icons;
