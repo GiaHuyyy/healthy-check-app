@@ -1,4 +1,4 @@
-import { Image, ScrollView, Text, View } from "react-native";
+import { Image, Modal, ScrollView, Text, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
@@ -19,7 +19,9 @@ const days = [
 ];
 const CycleTracking = () => {
   const [selectedDay, setSelectedDay] = useState(days[5]);
-
+  const [date, setDate] = useState(selectedDay.duration);
+  const [modalVisible, setModalVisible] = useState(false);
+  console.log(date);
   // Render menstrual health items
   const MenstrualHealthItem = ({ img, content }) => {
     return (
@@ -39,6 +41,21 @@ const CycleTracking = () => {
         </Text>
       </TouchableOpacity>
     );
+  };
+
+  const handleChangedates = (date) => {
+    if (date < 1) {
+      alert("Duration must be greater than 0");
+      return;
+    }
+    const updatedDays = days.map((day) => {
+      if (day.date === selectedDay.date) {
+        return { ...day, duration: Number(date) };
+      }
+      return day;
+    });
+    setSelectedDay((prev) => ({ ...prev, duration: Number(date) }));
+    setModalVisible(false);
   };
 
   const AnimatedStepsText = ({ targetSteps }) => {
@@ -75,7 +92,10 @@ const CycleTracking = () => {
                   className={`mt-[6px] h-[42px] w-[42px] items-center justify-center rounded-2xl ${
                     selectedDay.date === day.date ? "bg-[#535CE8]" : "bg-[#F8F9FA] dark:bg-[#2C2C2E]"
                   }`}
-                  onPress={() => setSelectedDay(day)}
+                  onPress={() => {
+                    setSelectedDay(day);
+                    setDate(day.duration);
+                  }}
                 >
                   <Text
                     className={`font-oregular400 text-base ${selectedDay.date === day.date ? "text-[#F1F2FD]" : "text-[#323842] dark:text-[#E4E4E7]"}`}
@@ -86,6 +106,8 @@ const CycleTracking = () => {
               </View>
             ))}
           </View>
+
+          {/* Period */}
           <View
             className="mx-auto mt-10 h-[270px] w-[270px] items-center rounded-full bg-[#7C83ED]"
             style={{
@@ -99,10 +121,58 @@ const CycleTracking = () => {
             <Text className="mt-14 font-lbold700 text-lg text-white">Period in</Text>
             <AnimatedStepsText targetSteps={selectedDay.duration} />
             <Text className="mt-1 font-lregular400 text-xs text-white">{selectedDay.content}</Text>
-            <TouchableOpacity className="mt-6 h-9 items-center justify-center rounded-[18px] bg-white px-3">
+            <TouchableOpacity
+              className="mt-6 h-9 items-center justify-center rounded-[18px] bg-white px-3"
+              onPress={() => setModalVisible(true)}
+            >
               <Text className="font-lregular400 text-sm text-primary">Edit period dates</Text>
             </TouchableOpacity>
           </View>
+
+          {/* Modal period  */}
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <View className="flex-1 items-center justify-center bg-white/50">
+              <View className="w-[70%] items-center rounded-lg bg-white p-5 shadow-lg">
+                <Text className="mb-4 text-center font-omedium500 text-lg">Change your period dates</Text>
+                <View className="mt-2 h-11 w-[20%] flex-row items-center justify-center rounded-lg border border-[#e9e9eb] pr-3">
+                  <TextInput
+                    className="h-full w-full pl-3 font-omedium500 text-sm"
+                    style={{ outline: "none" }}
+                    value={date.toString()}
+                    onChangeText={(text) => {
+                      const numericValue = text.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+                      setDate(numericValue);
+                    }}
+                    placeholder="Start date"
+                  />
+
+                  <Text className="font-omedium500 text-lg">days</Text>
+                </View>
+                <View className="mt-3 w-full flex-row justify-between">
+                  <TouchableOpacity
+                    className="mr-2 rounded-lg bg-red-500 px-4 py-2"
+                    onPress={() => {
+                      setModalVisible(false);
+                      setDate(selectedDay.duration);
+                    }}
+                  >
+                    <Text className="text-center font-omedium500 text-white">Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className="rounded-lg bg-blue-500 px-4 py-2"
+                    onPress={() => handleChangedates(date)}
+                  >
+                    <Text className="text-center font-omedium500 text-white">Save</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
 
           {/* How are you feeling today? */}
           <View className="mt-[42px]">

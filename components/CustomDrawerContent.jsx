@@ -126,6 +126,7 @@ const CustomDrawerContent = (props) => {
           handleOnPress={() => setModalVisible(true)}
         />
 
+        {/* Modal logout */}
         <Modal
           animationType="fade"
           transparent={true}
