@@ -21,7 +21,6 @@ const CycleTracking = () => {
   const [selectedDay, setSelectedDay] = useState(days[5]);
   const [date, setDate] = useState(selectedDay.duration);
   const [modalVisible, setModalVisible] = useState(false);
-  console.log(date);
   // Render menstrual health items
   const MenstrualHealthItem = ({ img, content }) => {
     return (

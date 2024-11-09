@@ -5,7 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../../components/CustomButton";
 import Icons from "../../../constants/icons";
 
-const Sharing = () => {
+import * as Share from "expo-sharing";
+import * as FileSystem from "expo-file-system";
+
+function Sharing() {
   const SharingItem = ({ Icon, title, des }) => {
     return (
       <View
@@ -27,6 +30,28 @@ const Sharing = () => {
         </View>
       </View>
     );
+  };
+
+  const handleShare = async () => {
+    try {
+      const isAvailable = await Share.isAvailableAsync();
+      if (!isAvailable) {
+        alert("Sharing is not available on this device");
+        return;
+      }
+      const itemsToShare = [
+        { title: "Keep your health in check", des: "Keep loved ones informed about your condition." },
+        { title: "Stay protected", des: "Protect yourself and others with timely health checks." },
+        { title: "Receive notifications", des: "Get notified for health updates and actions to take." },
+      ];
+      const message = itemsToShare.map((item) => `${item.title}\n${item.des}`).join("\n\n");
+
+      const fileUri = `${FileSystem.documentDirectory}sharing.txt`;
+      await FileSystem.writeAsStringAsync(fileUri, message);
+      await Share.shareAsync(fileUri);
+    } catch (error) {
+      console.log("Error =>", error);
+    }
   };
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-[#121212]">
@@ -58,6 +83,7 @@ const Sharing = () => {
             containerStyles="bg-[#535CE8] mt-[35px]"
             textStyles="text-white"
             Icon={Icons.Share}
+            handlePress={handleShare}
           />
 
           <CustomButton
@@ -70,6 +96,6 @@ const Sharing = () => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+}
 
 export default Sharing;
