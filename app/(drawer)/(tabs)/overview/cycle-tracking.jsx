@@ -9,39 +9,34 @@ import TitleLink from "../../../../components/TitleLink";
 import CustomButtonBack from "../../../../components/CustomButtonBack";
 import Icons from "../../../../constants/icons";
 import Images from "../../../../constants/images";
-const days = [
-  { label: "M", date: "06", duration: 12, content: "Low chance of getting pregnant" },
-  { label: "T", date: "07", duration: 18, content: "Birthday Mom" },
-  { label: "T", date: "09", duration: 2, content: "Go to Shopping" },
-  { label: "F", date: "10", duration: 22, content: "Go to Shool" },
-  { label: "S", date: "11", duration: 61, content: "Go to Swimming" },
-  { label: "S", date: "12", duration: 72, content: "Go to Kien Giang" },
-];
-const CycleTracking = () => {
-  const [selectedDay, setSelectedDay] = useState(days[5]);
-  const [date, setDate] = useState(selectedDay.duration);
-  const [modalVisible, setModalVisible] = useState(false);
-  // Render menstrual health items
-  const MenstrualHealthItem = ({ img, content }) => {
-    return (
-      <TouchableOpacity
-        className="w-[226px] items-center overflow-hidden rounded-2xl border border-[#e9e9eb] bg-white pb-[15px] dark:bg-[#1F1F1F]"
-        style={{
-          shadowColor: "rgba(23, 26, 31, 0.20)",
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 1,
-          shadowRadius: 2,
-          elevation: 3,
-        }}
-      >
-        <Image source={img} className="h-[160px] w-full" resizeMode="cover" />
-        <Text className="mt-3 w-[190px] font-osemibold600 text-lg text-[#323842] dark:text-[#E4E4E7]">
-          {content}
-        </Text>
-      </TouchableOpacity>
-    );
-  };
+import { getCycleTrackingData } from "../../../../lib/appwrite-cycle-tracking";
+import { useGlobalContext } from "../../../../context/GlobalProvider";
 
+const CycleTracking = () => {
+  const { user } = useGlobalContext();
+  const [selectedDay, setSelectedDay] = useState(null);
+  const [date, setDate] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [cycleTrackingData, setCycleTrackingData] = useState([]);
+
+  useEffect(() => {
+    getCycleTrackingData(user.$id)
+      .then((data) => {
+        console.log("Cycle tracking data:", data);
+        if (Array.isArray(data) && data.length > 0) {
+          setCycleTrackingData(data);
+          setSelectedDay(data[5]);
+          setDate(data[5].duration);
+        } else {
+          console.error("No data found or invalid data format");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching cycle tracking data:", error);
+      });
+  }, []);
+
+  console.log("cycleTrackingData", cycleTrackingData);
   const handleChangedates = (date) => {
     if (date < 1) {
       alert("Duration must be greater than 0");
@@ -75,6 +70,27 @@ const CycleTracking = () => {
 
     return <Text className="mt-1 font-osemibold600 text-[32px] text-white">{displaySteps} days</Text>;
   };
+
+  const MenstrualHealthItem = ({ img, content }) => {
+    return (
+      <TouchableOpacity
+        className="w-[226px] items-center overflow-hidden rounded-2xl border border-[#e9e9eb] bg-white pb-[15px] dark:bg-[#1F1F1F]"
+        style={{
+          shadowColor: "rgba(23, 26, 31, 0.20)",
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 1,
+          shadowRadius: 2,
+          elevation: 3,
+        }}
+      >
+        <Image source={img} className="h-[160px] w-full" resizeMode="cover" />
+        <Text className="mt-3 w-[190px] font-osemibold600 text-lg text-[#323842] dark:text-[#E4E4E7]">
+          {content}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-[#121212]">
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -82,14 +98,14 @@ const CycleTracking = () => {
         <View className="mb-8 px-5">
           {/* Calendar */}
           <View className="mt-7 flex-row justify-between">
-            {days.map((day, index) => (
+            {cycleTrackingData.map((day, index) => (
               <View key={index} className="items-center">
                 <Text className="font-lregular400 text-sm text-[#424955] dark:text-[#E4E4E7]">
                   {day.label}
                 </Text>
                 <TouchableOpacity
                   className={`mt-[6px] h-[42px] w-[42px] items-center justify-center rounded-2xl ${
-                    selectedDay.date === day.date ? "bg-[#535CE8]" : "bg-[#F8F9FA] dark:bg-[#2C2C2E]"
+                    selectedDay?.date === day.date ? "bg-[#535CE8]" : "bg-[#F8F9FA] dark:bg-[#2C2C2E]"
                   }`}
                   onPress={() => {
                     setSelectedDay(day);
@@ -97,7 +113,7 @@ const CycleTracking = () => {
                   }}
                 >
                   <Text
-                    className={`font-oregular400 text-base ${selectedDay.date === day.date ? "text-[#F1F2FD]" : "text-[#323842] dark:text-[#E4E4E7]"}`}
+                    className={`font-oregular400 text-base ${selectedDay?.date === day.date ? "text-[#F1F2FD]" : "text-[#323842] dark:text-[#E4E4E7]"}`}
                   >
                     {day.date}
                   </Text>
@@ -118,8 +134,8 @@ const CycleTracking = () => {
             }}
           >
             <Text className="mt-14 font-lbold700 text-lg text-white">Period in</Text>
-            <AnimatedStepsText targetSteps={selectedDay.duration} />
-            <Text className="mt-1 font-lregular400 text-xs text-white">{selectedDay.content}</Text>
+            <AnimatedStepsText targetSteps={selectedDay?.duration || 0} />
+            <Text className="mt-1 font-lregular400 text-xs text-white">{selectedDay?.content}</Text>
             <TouchableOpacity
               className="mt-6 h-9 items-center justify-center rounded-[18px] bg-white px-3"
               onPress={() => setModalVisible(true)}
@@ -128,7 +144,7 @@ const CycleTracking = () => {
             </TouchableOpacity>
           </View>
 
-          {/* Modal period  */}
+          {/* Modal period */}
           <Modal
             animationType="fade"
             transparent={true}
@@ -142,7 +158,7 @@ const CycleTracking = () => {
                   <TextInput
                     className="h-full w-full pl-3 font-omedium500 text-sm"
                     style={{ outline: "none" }}
-                    value={date.toString()}
+                    value={date?.toString() || ""}
                     onChangeText={(text) => {
                       const numericValue = text.replace(/[^0-9]/g, ""); // Remove non-numeric characters
                       setDate(numericValue);
@@ -157,7 +173,7 @@ const CycleTracking = () => {
                     className="mr-2 rounded-lg bg-red-500 px-4 py-2"
                     onPress={() => {
                       setModalVisible(false);
-                      setDate(selectedDay.duration);
+                      setDate(selectedDay?.duration || 0);
                     }}
                   >
                     <Text className="text-center font-omedium500 text-white">Cancel</Text>
