@@ -9,24 +9,28 @@ import TitleLink from "../../../../components/TitleLink";
 import CustomButtonBack from "../../../../components/CustomButtonBack";
 import Icons from "../../../../constants/icons";
 import Images from "../../../../constants/images";
-import { getCycleTrackingData } from "../../../../lib/appwrite-cycle-tracking";
+import { getCycleTrackingData, updateCycleTrackingData } from "../../../../lib/appwrite-cycle-tracking";
 import { useGlobalContext } from "../../../../context/GlobalProvider";
 
 const CycleTracking = () => {
   const { user } = useGlobalContext();
+  const [cycleTrackingData, setCycleTrackingData] = useState([]);
   const [selectedDay, setSelectedDay] = useState(null);
   const [date, setDate] = useState(0);
+  const [content, setContent] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const [cycleTrackingData, setCycleTrackingData] = useState([]);
+  const [cycleTrackingId, setCycleTrackingId] = useState(null);
 
   useEffect(() => {
     getCycleTrackingData(user.$id)
       .then((data) => {
-        console.log("Cycle tracking data:", data);
-        if (Array.isArray(data) && data.length > 0) {
-          setCycleTrackingData(data);
-          setSelectedDay(data[5]);
-          setDate(data[5].duration);
+        setCycleTrackingId(data.$id);
+        const dataParsed = JSON.parse(data.days);
+        if (Array.isArray(dataParsed) && dataParsed.length > 0) {
+          setCycleTrackingData(dataParsed);
+          setSelectedDay(dataParsed[5]);
+          setDate(dataParsed[5].duration);
+          setContent(dataParsed[5].content);
         } else {
           console.error("No data found or invalid data format");
         }
@@ -36,20 +40,20 @@ const CycleTracking = () => {
       });
   }, []);
 
-  console.log("cycleTrackingData", cycleTrackingData);
-  const handleChangedates = (date) => {
+  const handleChangedates = async (date) => {
     if (date < 1) {
       alert("Duration must be greater than 0");
       return;
     }
-    const updatedDays = days.map((day) => {
+    cycleTrackingData.forEach((day) => {
       if (day.date === selectedDay.date) {
-        return { ...day, duration: Number(date) };
+        day.duration = Number(date);
+        day.content = content;
       }
-      return day;
     });
-    setSelectedDay((prev) => ({ ...prev, duration: Number(date) }));
+    await updateCycleTrackingData(cycleTrackingId, cycleTrackingData);
     setModalVisible(false);
+    alert("Period dates updated successfully");
   };
 
   const AnimatedStepsText = ({ targetSteps }) => {
@@ -110,6 +114,7 @@ const CycleTracking = () => {
                   onPress={() => {
                     setSelectedDay(day);
                     setDate(day.duration);
+                    setContent(day.content);
                   }}
                 >
                   <Text
@@ -154,20 +159,35 @@ const CycleTracking = () => {
             <View className="flex-1 items-center justify-center bg-white/50">
               <View className="w-[70%] items-center rounded-lg bg-white p-5 shadow-lg">
                 <Text className="mb-4 text-center font-omedium500 text-lg">Change your period dates</Text>
-                <View className="mt-2 h-11 w-[20%] flex-row items-center justify-center rounded-lg border border-[#e9e9eb] pr-3">
-                  <TextInput
-                    className="h-full w-full pl-3 font-omedium500 text-sm"
-                    style={{ outline: "none" }}
-                    value={date?.toString() || ""}
-                    onChangeText={(text) => {
-                      const numericValue = text.replace(/[^0-9]/g, ""); // Remove non-numeric characters
-                      setDate(numericValue);
-                    }}
-                    placeholder="Start date"
-                  />
+                <View className="mt-2 h-11 flex-row items-center justify-center">
+                  <View className="h-full w-[20%] flex-row items-center justify-center rounded-lg border border-[#e9e9eb] pr-3">
+                    <TextInput
+                      className="h-full w-full pl-3 font-omedium500 text-sm"
+                      style={{ outline: "none" }}
+                      value={date?.toString() || ""}
+                      onChangeText={(text) => {
+                        const numericValue = text.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+                        setDate(numericValue);
+                      }}
+                      placeholder="Start date"
+                    />
 
-                  <Text className="font-omedium500 text-lg">days</Text>
+                    <Text className="font-omedium500 text-lg">days</Text>
+                  </View>
+
+                  <Text className="mx-3 text-lg text-[#ababaf]">|</Text>
+
+                  <View className="h-full w-[50%] flex-row items-center justify-center rounded-lg border border-[#e9e9eb] pr-3">
+                    <TextInput
+                      className="h-full w-full pl-3 font-omedium500 text-base"
+                      style={{ outline: "none" }}
+                      value={content}
+                      onChangeText={setContent}
+                      placeholder="Start date"
+                    />
+                  </View>
                 </View>
+
                 <View className="mt-3 w-full flex-row justify-between">
                   <TouchableOpacity
                     className="mr-2 rounded-lg bg-red-500 px-4 py-2"
