@@ -13,6 +13,7 @@ const DrawerLayout = () => {
           drawerStyle: {
             borderTopLeftRadius: 20,
             borderBottomLeftRadius: 20,
+            width: 300,
           },
         }}
         drawerContent={(props) => <CustomDrawerContent {...props} />}

@@ -7,7 +7,7 @@ import { useGlobalContext } from "../../../context/GlobalProvider";
 
 const TabIcon = ({ Icon, name, focused }) => {
   return (
-    <View className="items-center justify-center">
+    <View className="items-center justify-center w-20 mt-3">
       {name === "Sharing" ? (
         <Icon className="h-6 w-6" fill={`${focused ? "#535CE8" : "#565E6C"}`} />
       ) : (

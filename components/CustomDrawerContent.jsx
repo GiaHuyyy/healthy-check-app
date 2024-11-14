@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, Switch, Modal } from "react-native";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { useGlobalContext } from "../context/GlobalProvider";
@@ -7,6 +7,7 @@ import { signOut } from "../lib/appwrite";
 import LoadingScreen from "./LoadingScreen";
 import Icons from "../constants/icons";
 import { router } from "expo-router";
+import { androidShadowStyle } from "./androidShadowStyle";
 
 const CustomDrawerContent = (props) => {
   const { user, setUser, setIsLoggedIn, isOnline, setIsOnline, colorScheme, setColorScheme } =
@@ -134,7 +135,7 @@ const CustomDrawerContent = (props) => {
           onRequestClose={() => setModalVisible(false)}
         >
           <View className="flex-1 items-center justify-center bg-white/50">
-            <View className="w-[70%] items-center rounded-lg bg-white p-5 shadow-lg">
+            <View className="w-[70%] items-center rounded-lg bg-white p-5 shadow-lg" style={androidShadowStyle}>
               <Text className="mb-4 text-center font-omedium500 text-lg">
                 Are you sure you want to logout?
               </Text>

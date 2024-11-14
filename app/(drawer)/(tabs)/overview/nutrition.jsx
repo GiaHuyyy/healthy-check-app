@@ -11,6 +11,7 @@ import CustomButton from "../../../../components/CustomButton";
 import Icons from "../../../../constants/icons";
 import { useGlobalContext } from "../../../../context/GlobalProvider";
 import { getNutritonData, updateNutritonData } from "../../../../lib/appwrite-nutriton";
+import { androidShadowStyle } from "../../../../components/androidShadowStyle";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -154,8 +155,8 @@ const Nutrition = () => {
   return (
     <GestureHandlerRootView className="flex-1">
       <SafeAreaView className="flex-1 bg-white dark:bg-[#121212]">
+        <CustomButtonBack title="Nutrition" handlePress={() => router.back()} />
         <ScrollView showsVerticalScrollIndicator={false}>
-          <CustomButtonBack title="Nutrition" handlePress={() => router.back()} />
           <View className="px-5 pb-8">
             <View className="mt-10 items-center">
               <Text className="w-[240px] text-center font-osemibold600 text-2xl leading-9 text-primary dark:text-[#E4E4E7]">
@@ -235,11 +236,14 @@ const Nutrition = () => {
               onRequestClose={() => setModalVisible(false)}
             >
               <View className="flex-1 items-center justify-center bg-white/50">
-                <View className="w-[70%] items-center rounded-lg bg-white p-5 shadow-lg">
+                <View
+                  className="w-[70%] items-center rounded-lg bg-white p-5 shadow-lg"
+                  style={androidShadowStyle}
+                >
                   <Text className="mb-4 text-center font-omedium500 text-lg">Add your meals</Text>
-                  <View className="h-11 w-[40%] flex-row items-center justify-center rounded-lg border border-[#e9e9eb] pr-3">
+                  <View className="h-11 w-[68%] flex-row items-center justify-center rounded-lg border border-[#e9e9eb] pr-3">
                     <TextInput
-                      className="h-full w-full pl-3 text-center font-omedium500 text-base"
+                      className="h-full flex-1 pl-3 text-center font-omedium500 text-base"
                       style={{ outline: "none" }}
                       value={nameMeal}
                       onChangeText={setNameMeal}
@@ -253,7 +257,7 @@ const Nutrition = () => {
                       key={index}
                       className="mt-3 h-11 w-full flex-row items-center justify-between rounded-lg bg-white p-3"
                       style={{
-                        shadowColor: "rgba(23, 26, 31, 0.20)",
+                        shadowColor: "#ccc",
                         shadowOffset: { width: 0, height: 0 },
                         shadowOpacity: 1,
                         shadowRadius: 2,
@@ -296,7 +300,10 @@ const Nutrition = () => {
               onRequestClose={() => setDeleteModalVisible(false)}
             >
               <View className="flex-1 items-center justify-center bg-white/50">
-                <View className="w-[70%] items-center rounded-lg bg-white p-5 shadow-lg">
+                <View
+                  className="w-[70%] items-center rounded-lg bg-white p-5 shadow-lg"
+                  style={androidShadowStyle}
+                >
                   <Text className="mb-4 text-center font-omedium500 text-lg">Confirm Delete</Text>
                   <Text className="mb-4 text-center font-omedium500 text-base">
                     Are you sure you want to delete this meal?

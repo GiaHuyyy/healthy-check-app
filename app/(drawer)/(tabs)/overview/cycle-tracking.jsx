@@ -1,4 +1,4 @@
-import { Image, Modal, ScrollView, Text, TextInput, View } from "react-native";
+import { Image, Modal, Platform, ScrollView, Text, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
@@ -11,6 +11,7 @@ import Icons from "../../../../constants/icons";
 import Images from "../../../../constants/images";
 import { getCycleTrackingData, updateCycleTrackingData } from "../../../../lib/appwrite-cycle-tracking";
 import { useGlobalContext } from "../../../../context/GlobalProvider";
+import { androidShadowStyle } from "../../../../components/androidShadowStyle";
 
 const CycleTracking = () => {
   const { user } = useGlobalContext();
@@ -97,8 +98,8 @@ const CycleTracking = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-[#121212]">
+      <CustomButtonBack title="Cycle Traking" handlePress={() => router.back()} />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <CustomButtonBack title="Cycle Traking" handlePress={() => router.back()} />
         <View className="mb-8 px-5">
           {/* Calendar */}
           <View className="mt-7 flex-row justify-between">
@@ -157,12 +158,15 @@ const CycleTracking = () => {
             onRequestClose={() => setModalVisible(false)}
           >
             <View className="flex-1 items-center justify-center bg-white/50">
-              <View className="w-[70%] items-center rounded-lg bg-white p-5 shadow-lg">
+              <View
+                className="w-[90%] items-center rounded-lg bg-white p-5 shadow-lg"
+                style={androidShadowStyle}
+              >
                 <Text className="mb-4 text-center font-omedium500 text-lg">Change your period dates</Text>
                 <View className="mt-2 h-11 flex-row items-center justify-center">
-                  <View className="h-full w-[20%] flex-row items-center justify-center rounded-lg border border-[#e9e9eb] pr-3">
+                  <View className="h-full w-[30%] flex-row items-center justify-center rounded-lg border border-[#e9e9eb] pr-3">
                     <TextInput
-                      className="h-full w-full pl-3 font-omedium500 text-sm"
+                      className={`h-full flex-1 pl-3 font-omedium500 text-sm ${Platform.OS === "web" ? "w-full" : ""}`}
                       style={{ outline: "none" }}
                       value={date?.toString() || ""}
                       onChangeText={(text) => {
@@ -179,7 +183,7 @@ const CycleTracking = () => {
 
                   <View className="h-full w-[50%] flex-row items-center justify-center rounded-lg border border-[#e9e9eb] pr-3">
                     <TextInput
-                      className="h-full w-full pl-3 font-omedium500 text-base"
+                      className={`h-full flex-1 pl-3 font-omedium500 text-base ${Platform.OS === "web" ? "w-full" : ""}`}
                       style={{ outline: "none" }}
                       value={content}
                       onChangeText={setContent}
