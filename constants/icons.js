@@ -1,5 +1,6 @@
 import Logo from "../assets/icons/logo.svg";
 import LogoSmall from "../assets/icons/logo-small.svg";
+import LogoGemin from "../assets/icons/gemini.svg";
 import Overview from "../assets/icons/overview.svg";
 import Explore from "../assets/icons/explore.svg";
 import Sharing from "../assets/icons/sharing.svg";
@@ -48,6 +49,7 @@ import Camera from "../assets/icons/camera.svg";
 const Icons = {
   Logo,
   LogoSmall,
+  LogoGemin,
   Overview,
   Explore,
   Sharing,

@@ -77,6 +77,13 @@ const CustomDrawerContent = (props) => {
           handleOnPress={() => router.push("/profile")}
         />
 
+        <DrawItem
+          iconName="logo-octocat"
+          name="Gemini ChatBox"
+          color="#9CA3AF"
+          handleOnPress={() => router.push("/gemini-chatbox")}
+        />
+
         <View className="flex-row items-center justify-between">
           <DrawItem iconName="eye-outline" name="Show Online Status" color="#9CA3AF" />
           <Switch

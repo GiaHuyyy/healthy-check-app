@@ -1,3 +1,5 @@
+import GeminiLogo from "../assets/images/Google_Gemini_logo.png";
+import GeminiIcon from "../assets/images/google-gemini-icon.png";
 import hero from "../assets/images/hero.png";
 import avatar from "../assets/images/avatar.jpg";
 import bgScore from "../assets/images/bg-score.png";
@@ -12,6 +14,8 @@ import foryou02 from "../assets/images/foryou-02.png";
 import foryou03 from "../assets/images/foryou-03.png";
 
 const Images = {
+  GeminiLogo,
+  GeminiIcon,
   hero,
   avatar,
   bgScore,
