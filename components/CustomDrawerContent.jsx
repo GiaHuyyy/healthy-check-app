@@ -3,11 +3,13 @@ import { View, Text, Image, TouchableOpacity, Switch, Modal } from "react-native
 import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { useGlobalContext } from "../context/GlobalProvider";
 import { Ionicons } from "@expo/vector-icons";
-import { signOut } from "../lib/appwrite";
-import LoadingScreen from "./LoadingScreen";
 import Icons from "../constants/icons";
+import Images from "../constants/images";
 import { router } from "expo-router";
 import { androidShadowStyle } from "./androidShadowStyle";
+
+import LoadingScreen from "./LoadingScreen";
+import { signOut } from "../lib/appwrite";
 
 const CustomDrawerContent = (props) => {
   const { user, setUser, setIsLoggedIn, isOnline, setIsOnline, colorScheme, setColorScheme } =
@@ -26,10 +28,14 @@ const CustomDrawerContent = (props) => {
     return <LoadingScreen redirectTo="/sign-in" title="Sign out ..." />;
   }
 
-  const DrawItem = ({ iconName, name, color, handleOnPress }) => {
+  const DrawItem = ({ iconName, iconImg, name, color = "#9CA3AF", handleOnPress }) => {
     return (
       <TouchableOpacity onPress={handleOnPress} className="h-11 flex-row items-center">
-        <Ionicons name={iconName} size={20} color={color} />
+        {iconImg ? (
+          <Image source={iconImg} className="h-6 w-6" resizeMode="contain" />
+        ) : (
+          <Ionicons name={iconName} size={24} color={color} />
+        )}
         <Text
           className={`ml-3 font-lregular400 text-base ${name === "Logout" ? "text-red-500" : "text-gray-900 dark:text-[#9e9da8]"}`}
         >
@@ -70,22 +76,17 @@ const CustomDrawerContent = (props) => {
 
       {/* Drawer Items */}
       <View className="pl-5 pr-1">
-        <DrawItem
-          iconName="person-outline"
-          name="Profile"
-          color="#9CA3AF"
-          handleOnPress={() => router.push("/profile")}
-        />
+        <DrawItem iconName="person-outline" name="Profile" handleOnPress={() => router.push("/profile")} />
 
         <DrawItem
-          iconName="logo-octocat"
+          // iconName="logo-octocat"
+          iconImg={Images.GeminiIcon}
           name="Gemini ChatBox"
-          color="#9CA3AF"
           handleOnPress={() => router.push("/gemini-chatbox")}
         />
 
         <View className="flex-row items-center justify-between">
-          <DrawItem iconName="eye-outline" name="Show Online Status" color="#9CA3AF" />
+          <DrawItem iconName="eye-outline" name="Show Online Status" />
           <Switch
             value={isOnline}
             onValueChange={(value) => setIsOnline(value)}
@@ -94,21 +95,16 @@ const CustomDrawerContent = (props) => {
           />
         </View>
 
-        <DrawItem iconName="stats-chart-outline" name="My Stats" color="#9CA3AF" />
-        <DrawItem iconName="wallet-outline" name="Payments" color="#9CA3AF" />
+        <DrawItem iconName="stats-chart-outline" name="My Stats" />
+        <DrawItem iconName="wallet-outline" name="Payments" />
 
         {/* Divider */}
         <View className="mt-2 h-[1px] w-full bg-gray-200" />
 
-        <DrawItem iconName="settings-outline" name="Settings" color="#9CA3AF" />
-        <DrawItem iconName="language-outline" name="Language" color="#9CA3AF" />
+        <DrawItem iconName="language-outline" name="Language" />
 
         <View className="flex-row items-center justify-between">
-          <DrawItem
-            iconName={colorScheme === "dark" ? "sunny-outline" : "moon-outline"}
-            name="Dark Mode"
-            color="#9CA3AF"
-          />
+          <DrawItem iconName={colorScheme === "dark" ? "sunny-outline" : "moon-outline"} name="Dark Mode" />
           <Switch
             value={colorScheme === "dark"}
             onValueChange={(value) => setColorScheme(value ? "dark" : "light")}
@@ -120,9 +116,9 @@ const CustomDrawerContent = (props) => {
         {/* Divider */}
         <View className="mt-2 h-[1px] w-full bg-gray-200" />
 
-        <DrawItem iconName="help-circle-outline" name="Help & Support" color="#9CA3AF" />
+        <DrawItem iconName="help-circle-outline" name="Help & Support" />
 
-        <DrawItem iconName="chatbubble-ellipses-outline" name="Community & Forums" color="#9CA3AF" />
+        <DrawItem iconName="chatbubble-ellipses-outline" name="Community & Forums" />
 
         {/* Divider */}
         <View className="mt-2 h-[1px] w-full bg-gray-200" />
@@ -142,7 +138,10 @@ const CustomDrawerContent = (props) => {
           onRequestClose={() => setModalVisible(false)}
         >
           <View className="flex-1 items-center justify-center bg-white/50">
-            <View className="w-[70%] items-center rounded-lg bg-white p-5 shadow-lg" style={androidShadowStyle}>
+            <View
+              className="w-[70%] items-center rounded-lg bg-white p-5 shadow-lg"
+              style={androidShadowStyle}
+            >
               <Text className="mb-4 text-center font-omedium500 text-lg">
                 Are you sure you want to logout?
               </Text>

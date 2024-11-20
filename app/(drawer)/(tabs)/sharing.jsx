@@ -1,14 +1,15 @@
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, Platform } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation, DrawerActions } from "@react-navigation/native";
 
 import CustomButton from "../../../components/CustomButton";
 import Icons from "../../../constants/icons";
-
-import * as Share from "expo-sharing";
-import * as FileSystem from "expo-file-system";
+import { CustomShareContent } from "../../../components/CustomShareContent";
 
 function Sharing() {
+  const navigation = useNavigation();
+
   const SharingItem = ({ Icon, title, des }) => {
     return (
       <View
@@ -32,42 +33,6 @@ function Sharing() {
     );
   };
 
-  const handleShare = async () => {
-    try {
-      const isAvailable = await Share.isAvailableAsync();
-      if (!isAvailable) {
-        alert("Sharing is not available on this device");
-        return;
-      }
-  
-      // URL của tệp mà bạn muốn chia sẻ
-      const url = "https://www.example.com/sample.pdf";
-  
-      // Tải tệp xuống thiết bị
-      const fileUri = `${FileSystem.cacheDirectory}sample.pdf`;
-      await FileSystem.downloadAsync(url, fileUri);
-  
-      // Chuỗi nội dung từ các SharingItem
-      const itemsToShare = [
-        { title: "Keep your health in check", des: "Keep loved ones informed about your condition." },
-        { title: "Stay protected", des: "Protect yourself and others with timely health checks." },
-        { title: "Receive notifications", des: "Get notified for health updates and actions to take." },
-      ];
-      const message = itemsToShare
-        .map(item => `${item.title}\n${item.des}`)
-        .join("\n\n");
-  
-      // Chia sẻ tệp cục bộ kèm theo nội dung từ SharingItem
-      await Share.shareAsync(fileUri, {
-        dialogTitle: "Share PDF with Message",
-        mimeType: "application/pdf",
-        UTI: "com.adobe.pdf", // Định dạng tệp PDF cho iOS
-        message: `${message}\n\nDownload file here: ${url}`,
-      });
-    } catch (error) {
-      console.log("Error =>", error);
-    }
-  };
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-[#121212]">
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -98,7 +63,7 @@ function Sharing() {
             containerStyles="bg-[#535CE8] mt-[35px]"
             textStyles="text-white"
             Icon={Icons.Share}
-            handlePress={handleShare}
+            handlePress={CustomShareContent}
           />
 
           <CustomButton
@@ -106,6 +71,7 @@ function Sharing() {
             containerStyles="border border-[#424955] mt-5 dark:border-[#616161]"
             textStyles="text-[#424955] dark:text-[#E4E4E7]"
             Icon={Icons.Setting}
+            handlePress={() => navigation.dispatch(DrawerActions.openDrawer())}
           />
         </View>
       </ScrollView>

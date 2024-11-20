@@ -12,6 +12,7 @@ import Images from "../../../../constants/images";
 import { getCycleTrackingData, updateCycleTrackingData } from "../../../../lib/appwrite-cycle-tracking";
 import { useGlobalContext } from "../../../../context/GlobalProvider";
 import { androidShadowStyle } from "../../../../components/androidShadowStyle";
+import { CustomShareContent } from "../../../../components/CustomShareContent";
 
 const CycleTracking = () => {
   const { user } = useGlobalContext();
@@ -228,6 +229,7 @@ const CycleTracking = () => {
                   shadowRadius: 2,
                   elevation: 3,
                 }}
+                onPress={CustomShareContent}
               >
                 <View className="mt-[14px] h-11 w-11 items-center justify-center rounded-full bg-[#F1F2FD] dark:bg-[#444444]">
                   <Icons.Note />
