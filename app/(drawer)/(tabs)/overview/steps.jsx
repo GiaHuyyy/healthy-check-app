@@ -9,6 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButtonBack from "../../../../components/CustomButtonBack";
 import Icons from "../../../../constants/icons";
 import { useGlobalContext } from "../../../../context/GlobalProvider";
+import { getStepsData } from "../../../../lib/appwrite-steps";
 
 // Get screen dimensions for responsive layout
 const screenWidth = Dimensions.get("window").width;
@@ -16,36 +17,60 @@ const screenWidth = Dimensions.get("window").width;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const Steps = () => {
+  const { user } = useGlobalContext();
+  const [stepsData, setStepsData] = useState({ Today: [], Weekly: [], Monthly: [] });
   const [selectedTab, setSelectedTab] = useState("Weekly");
-  const stepsPercentage = (11857 / 18000) * 100;
+  const [step, setStep] = useState(0);
+  const [activityData, setActivityData] = useState([]);
+
+  useEffect(() => {
+    getStepsData(user.$id)
+      .then((data) => {
+        setStep(data.step);
+        const dataStepsParsed = JSON.parse(data.steps);
+        const dataActivityParsed = JSON.parse(data.activity);
+        if (
+          dataStepsParsed &&
+          typeof dataStepsParsed === "object" &&
+          Array.isArray(dataActivityParsed) &&
+          dataActivityParsed.length > 0
+        ) {
+          setStepsData(dataStepsParsed); // Set data to parsed JSON object
+          setActivityData(dataActivityParsed);
+        } else {
+          console.error("No data found or invalid data format");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching steps data:", error);
+      });
+  }, []);
+
+  const stepsPercentage = (step / 18000) * 100;
 
   const animatedStepsValue = useSharedValue(0);
   const animatedProgressValue = useSharedValue(0);
 
   useEffect(() => {
-    animatedStepsValue.value = withTiming(11857, { duration: 1000 });
+    animatedStepsValue.value = withTiming(step, { duration: 1000 });
     animatedProgressValue.value = withTiming(stepsPercentage, { duration: 1000 });
   }, [animatedStepsValue, animatedProgressValue]);
-
-  const dataSets = {
-    Today: [12000, 8000, 15000, 10000, 9000, 17000, 14000],
-    Weekly: [10000, 12000, 13000, 9000, 9500, 18000, 16000],
-    Monthly: [8000, 8500, 9000, 12000, 15000, 11000, 14000],
-  };
 
   const chartData = {
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     datasets: [
       {
-        data: dataSets[selectedTab],
+        data: stepsData[selectedTab],
       },
     ],
   };
 
-  const circleData = [
-    { Icon: Icons.Fire, value: "850 kcal", percentage: 50, color: "#2ACCCF", feColor: "#d4f5f5" },
-    { Icon: Icons.Map, value: "5 km", percentage: 30, color: "#7B48CC", feColor: "#e5daf5" },
-    { Icon: Icons.Min, value: "120 min", percentage: 70, color: "#535CE8", feColor: "#dddefa" },
+  const circleIcon = [{ Icon: Icons.Fire }, { Icon: Icons.Map }, { Icon: Icons.Min }];
+
+  const circlecColor = [
+    { color: "#2ACCCF", feColor: "#d4f5f5" },
+    { color: "#7B48CC", feColor: "#e5daf5" },
+    { color: "#535CE8", feColor: "#dddefa" },
   ];
 
   const CircleProgress = ({ percentage, color, feColor = "#F4F6FA", radius, strokeWidth }) => {
@@ -125,7 +150,7 @@ const Steps = () => {
             </Svg>
             <View className="absolute items-center justify-center">
               <Icons.Steps />
-              <AnimatedStepsText targetSteps={11857} />
+              <AnimatedStepsText targetSteps={step} />
               <Text className="font-lregular400 text-sm text-[#9095A0] dark:text-[#B0B0B0]">
                 Steps out of 18k
               </Text>
@@ -134,19 +159,19 @@ const Steps = () => {
 
           {/* Circular icons */}
           <View className="mt-10 flex-row justify-center space-x-5">
-            {circleData.map((item, index) => (
+            {activityData.map((item, index) => (
               <View key={index}>
                 <View className="items-center justify-center">
                   <Svg className="h-[64px] w-[64px] -rotate-90" viewBox="0 0 240 240">
                     <CircleProgress
                       percentage={item.percentage}
-                      color={item.color}
-                      feColor={item.feColor}
+                      color={circlecColor[index].color}
+                      feColor={circlecColor[index].feColor}
                       radius={104}
                       strokeWidth={26}
                     />
                   </Svg>
-                  <item.Icon className="absolute" />
+                  <View className="absolute">{circleIcon[index].Icon()}</View>
                 </View>
                 <Text className="mt-1 text-center font-omedium500 text-base text-primary dark:text-[#E0E0E0]">
                   {item.value}
