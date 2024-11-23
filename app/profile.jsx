@@ -92,6 +92,7 @@ const Profile = () => {
             handleChangeText={(e) => setForm({ ...form, username: e })}
             containerStyles="mt-[20px]"
             placeholder={"Enter username"}
+            editable={false}
           />
 
           <FormField

@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity } from "react-nativ
 import React, { useState } from "react";
 import Icons from "../constants/icons";
 
-const FormField = ({ title, value, placeholder, handleChangeText, containerStyles, ...props }) => {
+const FormField = ({ title, value, placeholder, handleChangeText, containerStyles, editable, ...props }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -21,6 +21,7 @@ const FormField = ({ title, value, placeholder, handleChangeText, containerStyle
             (title === "Password" && !showPassword) || (title === "Repeat Password" && !showPassword)
           }
           {...props}
+          editable={editable}
         />
 
         {(title === "Password" || title === "Repeat Password") && (
