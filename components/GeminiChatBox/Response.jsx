@@ -9,8 +9,7 @@ import { REACT_APP_GOOGLE_API_KEY } from "@env";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 const date = new Date();
-const API_KEY = REACT_APP_GOOGLE_API_KEY;
-const genAI = new GoogleGenerativeAI(API_KEY);
+const API_KEY = (REACT_APP_GOOGLE_API_KEY || "").trim();
 
 export default function Response(props) {
   const { colorScheme } = useGlobalContext();
@@ -24,14 +23,30 @@ export default function Response(props) {
     let isMounted = true; // Track if the component is mounted
 
     const fetchData = async () => {
-      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-      const prompt = props.prompt;
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      const text = await response.text();
-      if (isMounted) {
-        setGeneratedText(text);
-        setIsLoading(false);
+      try {
+        if (!API_KEY) {
+          throw new Error(
+            "Missing Gemini API key. Check REACT_APP_GOOGLE_API_KEY in .env.development (and restart with `expo start -c` if you just changed it).",
+          );
+        }
+
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const prompt = props.prompt;
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = await response.text();
+
+        if (isMounted) {
+          setGeneratedText(text);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        if (isMounted) {
+          const msg = error?.message || String(error);
+          setGeneratedText(`Gemini error: ${msg}`);
+          setIsLoading(false);
+        }
       }
     };
     fetchData();

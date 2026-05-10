@@ -1,5 +1,11 @@
+const fs = require("fs");
+const path = require("path");
+
 module.exports = function (api) {
-  api.cache(true);
+  // Ensure changes to .env.development invalidate Metro/Babel transform cache.
+  // Without this, updating the key can require `expo start -c` to take effect.
+  const envPath = path.join(__dirname, ".env.development");
+  api.cache.using(() => (fs.existsSync(envPath) ? fs.readFileSync(envPath, "utf8") : ""));
   return {
     presets: ["babel-preset-expo"],
     plugins: [

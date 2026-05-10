@@ -9,6 +9,7 @@ import Icons from "../../constants/icons";
 import CustomButtonBack from "../../components/CustomButtonBack";
 import { createUser } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -19,7 +20,7 @@ const SignUp = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { setUser, setIsLoggedIn } = useGlobalContext();
+  const { setUser, isLoggedIn,setIsLoggedIn } = useGlobalContext();
 
   const submit = async () => {
     if (!form.username || !form.email || !form.password) {
@@ -34,7 +35,7 @@ const SignUp = () => {
 
       setUser(result);
       setIsLoggedIn(true);
-      router.replace("/overview");
+      // router.replace("/overview");
       // Alert.alert("Success", "You have successfully signed up", [
       //   {
       //     text: "OK",
@@ -42,12 +43,16 @@ const SignUp = () => {
       //   },
       // ]);
     } catch (error) {
-      Alert.alert("Error", error.message);
-      // alert(error.message);
+      // Alert.alert("Error", error.message);
+      alert(error.message);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  if (isLoggedIn) {
+    return <LoadingScreen redirectTo="/overview" title="Signing in ..." />;
+  }
 
   return (
     <SafeAreaView className="flex-1">
